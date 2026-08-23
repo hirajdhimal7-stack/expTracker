@@ -3,154 +3,93 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Hiraj & GF — Shared Budget</title>
+<title>Hiraj & Ress — Shared Budget</title>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-:root {
-  --h: #1a1a2e;
-  --p1: #7c6af7;
-  --p1l: #ede9ff;
-  --p2: #f76a8c;
-  --p2l: #ffeef3;
-  --bg: #f4f3f8;
-  --card: #ffffff;
-  --text: #1a1a2e;
-  --sub: #6b6880;
-  --border: #e8e6f0;
-  --green: #22c55e;
-  --greenl: #dcfce7;
-  --amber: #f59e0b;
-  --amberl: #fef3c7;
-  --red: #ef4444;
-  --redl: #fee2e2;
-  --r: 16px;
-  --rs: 10px;
-}
-* { box-sizing: border-box; margin: 0; padding: 0; }
-body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
-
-/* NAV */
-.nav { background: var(--h); padding: 0 20px; display: flex; align-items: center; justify-content: space-between; height: 60px; position: sticky; top: 0; z-index: 100; }
-.nav-logo { display: flex; align-items: center; gap: 10px; }
-.nav-logo .dot { width: 8px; height: 8px; border-radius: 50%; }
-.nav-logo .dot.p1 { background: var(--p1); }
-.nav-logo .dot.p2 { background: var(--p2); }
-.nav-logo span { color: white; font-weight: 600; font-size: 15px; letter-spacing: -0.3px; }
-.nav-tabs { display: flex; gap: 4px; }
-.nav-tab { padding: 7px 14px; border-radius: 8px; font-size: 13px; font-weight: 500; cursor: pointer; color: rgba(255,255,255,0.55); border: none; background: none; transition: all 0.15s; }
-.nav-tab.active, .nav-tab:hover { background: rgba(255,255,255,0.12); color: white; }
-.nav-tab.active { color: white; }
-.who-badge { display: flex; gap: 6px; align-items: center; }
-.who-btn { padding: 6px 14px; border-radius: 20px; font-size: 12px; font-weight: 600; cursor: pointer; border: 2px solid transparent; transition: all 0.15s; }
-.who-btn.p1 { background: var(--p1l); color: var(--p1); }
-.who-btn.p2 { background: var(--p2l); color: var(--p2); }
-.who-btn.active.p1 { background: var(--p1); color: white; border-color: var(--p1); }
-.who-btn.active.p2 { background: var(--p2); color: white; border-color: var(--p2); }
-
-/* PAGES */
-.page { display: none; padding: 20px; max-width: 800px; margin: 0 auto; }
-.page.active { display: block; }
-
-/* CARDS */
-.card { background: var(--card); border-radius: var(--r); padding: 20px; margin-bottom: 16px; border: 1px solid var(--border); }
-.card-title { font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--sub); margin-bottom: 16px; }
-
-/* SUMMARY GRID */
-.summary-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin-bottom: 16px; }
-.metric { background: var(--card); border-radius: var(--r); padding: 18px; border: 1px solid var(--border); }
-.metric .label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.07em; color: var(--sub); margin-bottom: 8px; }
-.metric .val { font-family: 'DM Mono', monospace; font-size: 24px; font-weight: 500; color: var(--text); }
-.metric .val.green { color: var(--green); }
-.metric .val.red { color: var(--red); }
-.metric .val.p1 { color: var(--p1); }
-.metric .val.p2 { color: var(--p2); }
-.metric .sub { font-size: 11px; color: var(--sub); margin-top: 4px; }
-
-/* OWED BANNER */
-.owed-banner { border-radius: var(--r); padding: 20px 24px; display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; flex-wrap: wrap; gap: 12px; }
-.owed-banner.balanced { background: var(--greenl); border: 1px solid #bbf7d0; }
-.owed-banner.p1owes { background: var(--p1l); border: 1px solid #c4b5fd; }
-.owed-banner.p2owes { background: var(--p2l); border: 1px solid #fda4af; }
-.owed-text { font-size: 16px; font-weight: 600; }
-.owed-amount { font-family: 'DM Mono', monospace; font-size: 28px; font-weight: 500; }
-.settle-btn { padding: 10px 20px; border-radius: 10px; font-size: 13px; font-weight: 600; cursor: pointer; border: none; background: var(--h); color: white; transition: opacity 0.15s; }
-.settle-btn:hover { opacity: 0.85; }
-
-/* ADD EXPENSE FORM */
-.add-form { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-.add-form .full { grid-column: 1 / -1; }
-.field label { font-size: 12px; font-weight: 600; color: var(--sub); margin-bottom: 6px; display: block; text-transform: uppercase; letter-spacing: 0.05em; }
-.field input, .field select { width: 100%; height: 42px; border: 1.5px solid var(--border); border-radius: var(--rs); font-size: 14px; font-family: 'DM Sans', sans-serif; padding: 0 12px; background: var(--bg); color: var(--text); outline: none; transition: border-color 0.15s; }
-.field input:focus, .field select:focus { border-color: var(--p1); }
-.field textarea { width: 100%; border: 1.5px solid var(--border); border-radius: var(--rs); font-size: 14px; font-family: 'DM Sans', sans-serif; padding: 10px 12px; background: var(--bg); color: var(--text); outline: none; resize: none; height: 60px; transition: border-color 0.15s; }
-.field textarea:focus { border-color: var(--p1); }
-.who-select { display: flex; gap: 8px; }
-.who-opt { flex: 1; padding: 10px; border-radius: var(--rs); border: 2px solid var(--border); text-align: center; cursor: pointer; font-size: 13px; font-weight: 600; transition: all 0.15s; }
-.who-opt.p1.sel { background: var(--p1); color: white; border-color: var(--p1); }
-.who-opt.p2.sel { background: var(--p2); color: white; border-color: var(--p2); }
-.who-opt:not(.sel) { color: var(--sub); }
-.add-btn { width: 100%; height: 46px; border-radius: var(--rs); border: none; background: var(--h); color: white; font-size: 14px; font-weight: 600; font-family: 'DM Sans', sans-serif; cursor: pointer; transition: opacity 0.15s; margin-top: 4px; }
-.add-btn:hover { opacity: 0.85; }
-
-/* EXPENSE LIST */
-.exp-list { display: flex; flex-direction: column; gap: 10px; }
-.exp-item { display: flex; align-items: center; gap: 14px; padding: 14px 16px; border-radius: var(--rs); background: var(--bg); border: 1px solid var(--border); }
-.exp-avatar { width: 38px; height: 38px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; flex-shrink: 0; }
-.exp-avatar.p1 { background: var(--p1l); color: var(--p1); }
-.exp-avatar.p2 { background: var(--p2l); color: var(--p2); }
-.exp-cat { font-size: 18px; margin-right: -4px; }
-.exp-info { flex: 1; }
-.exp-desc { font-size: 14px; font-weight: 500; }
-.exp-meta { font-size: 12px; color: var(--sub); margin-top: 2px; }
-.exp-amount { font-family: 'DM Mono', monospace; font-size: 15px; font-weight: 500; }
-.exp-del { background: none; border: none; color: var(--sub); cursor: pointer; font-size: 18px; padding: 4px; border-radius: 6px; line-height: 1; }
-.exp-del:hover { background: var(--redl); color: var(--red); }
-.empty-state { text-align: center; padding: 40px 20px; color: var(--sub); }
-.empty-state .icon { font-size: 36px; margin-bottom: 10px; }
-.empty-state p { font-size: 14px; }
-
-/* MONTH TABS */
-.month-tabs { display: flex; gap: 6px; overflow-x: auto; padding-bottom: 4px; margin-bottom: 16px; }
-.month-tab { padding: 7px 16px; border-radius: 20px; font-size: 12px; font-weight: 600; cursor: pointer; white-space: nowrap; border: 1.5px solid var(--border); background: var(--card); color: var(--sub); transition: all 0.15s; }
-.month-tab.active { background: var(--h); color: white; border-color: var(--h); }
-
-/* CATEGORY BREAKDOWN */
-.cat-row { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
-.cat-icon { font-size: 20px; width: 32px; text-align: center; }
-.cat-info { flex: 1; }
-.cat-label { font-size: 13px; font-weight: 500; }
-.cat-bar-wrap { height: 6px; background: var(--bg); border-radius: 3px; margin-top: 4px; overflow: hidden; }
-.cat-bar { height: 100%; border-radius: 3px; background: var(--p1); transition: width 0.4s; }
-.cat-amount { font-family: 'DM Mono', monospace; font-size: 13px; font-weight: 500; }
-
-/* SPLIT TABLE */
-.split-table { width: 100%; border-collapse: collapse; font-size: 13px; }
-.split-table th { text-align: left; color: var(--sub); font-weight: 600; font-size: 11px; text-transform: uppercase; letter-spacing: 0.07em; padding: 8px 0; border-bottom: 1px solid var(--border); }
-.split-table td { padding: 10px 0; border-bottom: 1px solid var(--border); }
-.split-table tr:last-child td { border-bottom: none; }
-.pill { display: inline-block; padding: 3px 10px; border-radius: 20px; font-size: 11px; font-weight: 700; }
-.pill.p1 { background: var(--p1l); color: var(--p1); }
-.pill.p2 { background: var(--p2l); color: var(--p2); }
-.pill.green { background: var(--greenl); color: var(--green); }
-
-/* TOAST */
-.toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(80px); background: var(--h); color: white; padding: 12px 24px; border-radius: 12px; font-size: 13px; font-weight: 500; z-index: 999; transition: transform 0.3s; pointer-events: none; white-space: nowrap; }
-.toast.show { transform: translateX(-50%) translateY(0); }
-
-@media (max-width: 480px) {
-  .add-form { grid-template-columns: 1fr; }
-  .add-form .full { grid-column: 1; }
-  .nav-tabs { display: none; }
-  .summary-grid { grid-template-columns: 1fr 1fr; }
-}
+:root{--h:#1a1a2e;--p1:#7c6af7;--p1l:#ede9ff;--p2:#f76a8c;--p2l:#ffeef3;--bg:#f4f3f8;--card:#ffffff;--text:#1a1a2e;--sub:#6b6880;--border:#e8e6f0;--green:#22c55e;--greenl:#dcfce7;--amber:#f59e0b;--amberl:#fef3c7;--red:#ef4444;--redl:#fee2e2;--r:16px;--rs:10px}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+.nav{background:var(--h);padding:0 20px;display:flex;align-items:center;justify-content:space-between;height:60px;position:sticky;top:0;z-index:100}
+.nav-logo{display:flex;align-items:center;gap:10px}
+.nav-logo .dot{width:8px;height:8px;border-radius:50%}
+.dot.p1{background:var(--p1)}.dot.p2{background:var(--p2)}
+.nav-logo span{color:white;font-weight:600;font-size:15px}
+.nav-tabs{display:flex;gap:4px}
+.nav-tab{padding:7px 14px;border-radius:8px;font-size:13px;font-weight:500;cursor:pointer;color:rgba(255,255,255,0.55);border:none;background:none;transition:all 0.15s}
+.nav-tab.active,.nav-tab:hover{background:rgba(255,255,255,0.12);color:white}
+.who-badge{display:flex;gap:6px;align-items:center}
+.who-btn{padding:6px 14px;border-radius:20px;font-size:12px;font-weight:600;cursor:pointer;border:2px solid transparent;transition:all 0.15s}
+.who-btn.p1{background:var(--p1l);color:var(--p1)}.who-btn.p2{background:var(--p2l);color:var(--p2)}
+.who-btn.active.p1{background:var(--p1);color:white;border-color:var(--p1)}
+.who-btn.active.p2{background:var(--p2);color:white;border-color:var(--p2)}
+.page{display:none;padding:20px;max-width:800px;margin:0 auto}
+.page.active{display:block}
+.card{background:var(--card);border-radius:var(--r);padding:20px;margin-bottom:16px;border:1px solid var(--border)}
+.card-title{font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;color:var(--sub);margin-bottom:16px}
+.summary-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-bottom:16px}
+.metric{background:var(--card);border-radius:var(--r);padding:18px;border:1px solid var(--border)}
+.metric .label{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.07em;color:var(--sub);margin-bottom:8px}
+.metric .val{font-family:'DM Mono',monospace;font-size:22px;font-weight:500}
+.metric .val.p1{color:var(--p1)}.metric .val.p2{color:var(--p2)}.metric .val.green{color:var(--green)}
+.metric .sub{font-size:11px;color:var(--sub);margin-top:4px}
+.owed-banner{border-radius:var(--r);padding:20px 24px;display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:12px}
+.owed-banner.balanced{background:var(--greenl);border:1px solid #bbf7d0}
+.owed-banner.p1owes{background:var(--p1l);border:1px solid #c4b5fd}
+.owed-banner.p2owes{background:var(--p2l);border:1px solid #fda4af}
+.owed-text{font-size:16px;font-weight:600}
+.owed-amount{font-family:'DM Mono',monospace;font-size:28px;font-weight:500}
+.settle-btn{padding:10px 20px;border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;border:none;background:var(--h);color:white}
+.add-form{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.add-form .full{grid-column:1/-1}
+.field label{font-size:12px;font-weight:600;color:var(--sub);margin-bottom:6px;display:block;text-transform:uppercase;letter-spacing:0.05em}
+.field input,.field select,.field textarea{width:100%;border:1.5px solid var(--border);border-radius:var(--rs);font-size:14px;font-family:'DM Sans',sans-serif;padding:0 12px;background:var(--bg);color:var(--text);outline:none;transition:border-color 0.15s;height:42px}
+.field textarea{height:60px;padding:10px 12px;resize:none}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--p1)}
+.who-select{display:flex;gap:8px}
+.who-opt{flex:1;padding:10px;border-radius:var(--rs);border:2px solid var(--border);text-align:center;cursor:pointer;font-size:13px;font-weight:600;transition:all 0.15s;color:var(--sub)}
+.who-opt.p1.sel{background:var(--p1);color:white;border-color:var(--p1)}
+.who-opt.p2.sel{background:var(--p2);color:white;border-color:var(--p2)}
+.add-btn{width:100%;height:46px;border-radius:var(--rs);border:none;background:var(--h);color:white;font-size:14px;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer;margin-top:4px}
+.exp-list{display:flex;flex-direction:column;gap:10px}
+.exp-item{display:flex;align-items:center;gap:14px;padding:14px 16px;border-radius:var(--rs);background:var(--bg);border:1px solid var(--border)}
+.exp-avatar{width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0}
+.exp-avatar.p1{background:var(--p1l);color:var(--p1)}.exp-avatar.p2{background:var(--p2l);color:var(--p2)}
+.exp-info{flex:1}.exp-desc{font-size:14px;font-weight:500}
+.exp-meta{font-size:12px;color:var(--sub);margin-top:2px}
+.exp-amount{font-family:'DM Mono',monospace;font-size:15px;font-weight:500}
+.exp-del{background:none;border:none;color:var(--sub);cursor:pointer;font-size:18px;padding:4px;border-radius:6px;line-height:1}
+.exp-del:hover{background:var(--redl);color:var(--red)}
+.empty-state{text-align:center;padding:40px 20px;color:var(--sub)}
+.month-tabs{display:flex;gap:6px;overflow-x:auto;padding-bottom:4px;margin-bottom:16px}
+.month-tab{padding:7px 16px;border-radius:20px;font-size:12px;font-weight:600;cursor:pointer;white-space:nowrap;border:1.5px solid var(--border);background:var(--card);color:var(--sub);transition:all 0.15s}
+.month-tab.active{background:var(--h);color:white;border-color:var(--h)}
+.cat-row{display:flex;align-items:center;gap:12px;margin-bottom:10px}
+.cat-icon{font-size:20px;width:32px;text-align:center}
+.cat-info{flex:1}.cat-label{font-size:13px;font-weight:500}
+.cat-bar-wrap{height:6px;background:var(--bg);border-radius:3px;margin-top:4px;overflow:hidden}
+.cat-bar{height:100%;border-radius:3px;background:var(--p1);transition:width 0.4s}
+.cat-amount{font-family:'DM Mono',monospace;font-size:13px;font-weight:500}
+.split-table{width:100%;border-collapse:collapse;font-size:13px}
+.split-table th{text-align:left;color:var(--sub);font-weight:600;font-size:11px;text-transform:uppercase;letter-spacing:0.07em;padding:8px 0;border-bottom:1px solid var(--border)}
+.split-table td{padding:10px 0;border-bottom:1px solid var(--border)}
+.split-table tr:last-child td{border-bottom:none}
+.pill{display:inline-block;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:700}
+.pill.p1{background:var(--p1l);color:var(--p1)}.pill.p2{background:var(--p2l);color:var(--p2)}.pill.green{background:var(--greenl);color:var(--green)}
+.sync-bar{background:#1a1a2e;color:rgba(255,255,255,0.7);text-align:center;font-size:11px;padding:5px;letter-spacing:0.05em}
+.sync-bar.live{background:#064e3b;color:#6ee7b7}
+.sync-bar.err{background:#7f1d1d;color:#fca5a5}
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--h);color:white;padding:12px 24px;border-radius:12px;font-size:13px;font-weight:500;z-index:999;transition:transform 0.3s;pointer-events:none;white-space:nowrap}
+.toast.show{transform:translateX(-50%) translateY(0)}
+@media(max-width:480px){.add-form{grid-template-columns:1fr}.add-form .full{grid-column:1}.nav-tabs{display:none}.summary-grid{grid-template-columns:1fr 1fr}}
 </style>
 </head>
 <body>
 
+<div class="sync-bar" id="sync-bar">⏳ Connecting to sync...</div>
+
 <nav class="nav">
   <div class="nav-logo">
-    <div class="dot p1"></div>
-    <div class="dot p2"></div>
+    <div class="dot p1"></div><div class="dot p2"></div>
     <span>splitwise ✦</span>
   </div>
   <div class="nav-tabs">
@@ -161,25 +100,17 @@ body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--t
   </div>
   <div class="who-badge">
     <button class="who-btn p1 active" id="whoP1" onclick="setWho('p1')">Hiraj</button>
-    <button class="who-btn p2" id="whoP2" onclick="setWho('p2')">GF</button>
+    <button class="who-btn p2" id="whoP2" onclick="setWho('p2')">Ress</button>
   </div>
 </nav>
 
-<!-- DASHBOARD -->
 <div class="page active" id="page-dashboard">
   <div id="owed-banner"></div>
   <div class="summary-grid" id="summary-grid"></div>
-  <div class="card">
-    <div class="card-title">This month's expenses</div>
-    <div id="recent-list"></div>
-  </div>
-  <div class="card">
-    <div class="card-title">Spending by category</div>
-    <div id="cat-breakdown"></div>
-  </div>
+  <div class="card"><div class="card-title">This month's expenses</div><div id="recent-list"></div></div>
+  <div class="card"><div class="card-title">Spending by category</div><div id="cat-breakdown"></div></div>
 </div>
 
-<!-- ADD EXPENSE -->
 <div class="page" id="page-add">
   <div class="card">
     <div class="card-title">Add new expense</div>
@@ -188,19 +119,12 @@ body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--t
         <label>Who's paying?</label>
         <div class="who-select">
           <div class="who-opt p1 sel" id="form-p1" onclick="selectPayer('p1')">Hiraj</div>
-          <div class="who-opt p2" id="form-p2" onclick="selectPayer('p2')">GF</div>
+          <div class="who-opt p2" id="form-p2" onclick="selectPayer('p2')">Ress</div>
         </div>
       </div>
-      <div class="field full">
-        <label>Description</label>
-        <input type="text" id="f-desc" placeholder="e.g. Sobeys groceries">
-      </div>
-      <div class="field">
-        <label>Amount ($)</label>
-        <input type="number" id="f-amount" placeholder="0.00" min="0" step="0.01">
-      </div>
-      <div class="field">
-        <label>Category</label>
+      <div class="field full"><label>Description</label><input type="text" id="f-desc" placeholder="e.g. Sobeys groceries"></div>
+      <div class="field"><label>Amount ($)</label><input type="number" id="f-amount" placeholder="0.00" min="0" step="0.01"></div>
+      <div class="field"><label>Category</label>
         <select id="f-cat">
           <option value="🏠 Rent">🏠 Rent</option>
           <option value="🛒 Groceries" selected>🛒 Groceries</option>
@@ -216,322 +140,237 @@ body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--t
           <option value="💰 Other">💰 Other</option>
         </select>
       </div>
-      <div class="field">
-        <label>Date</label>
-        <input type="date" id="f-date">
-      </div>
-      <div class="field">
-        <label>Split</label>
+      <div class="field"><label>Date</label><input type="date" id="f-date"></div>
+      <div class="field"><label>Split</label>
         <select id="f-split">
           <option value="50/50">50/50 — equal split</option>
           <option value="Hiraj pays all">Hiraj pays all</option>
           <option value="Ress pays all">Ress pays all</option>
-          <option value="Custom">Custom %</option>
         </select>
       </div>
-      <div class="field full">
-        <label>Note (optional)</label>
-        <textarea id="f-note" placeholder="Any extra details..."></textarea>
-      </div>
-      <div class="full">
-        <button class="add-btn" onclick="addExpense()">+ Add Expense</button>
-      </div>
+      <div class="field full"><label>Note (optional)</label><textarea id="f-note" placeholder="Any extra details..."></textarea></div>
+      <div class="full"><button class="add-btn" onclick="addExpense()">+ Add Expense</button></div>
     </div>
   </div>
 </div>
 
-<!-- HISTORY -->
 <div class="page" id="page-history">
   <div class="month-tabs" id="month-tabs"></div>
-  <div class="card">
-    <div class="card-title">All expenses</div>
-    <div id="history-list"></div>
-  </div>
+  <div class="card"><div class="card-title">All expenses</div><div id="history-list"></div></div>
 </div>
 
-<!-- SPLIT -->
 <div class="page" id="page-split">
-  <div class="card">
-    <div class="card-title">Monthly breakdown — Hiraj vs GF</div>
-    <div id="split-content"></div>
-  </div>
-  <div class="card">
-    <div class="card-title">Settlement history</div>
-    <div id="settlement-list"></div>
-  </div>
+  <div class="card"><div class="card-title">Monthly breakdown — Hiraj vs Ress</div><div id="split-content"></div></div>
+  <div class="card"><div class="card-title">Settlement history</div><div id="settlement-list"></div></div>
 </div>
 
 <div class="toast" id="toast"></div>
 
-<script>
-// ── Storage ──────────────────────────────────────────────────────────────────
-const KEY = 'couples_budget_v2';
-const SKEY = 'couples_settlements_v1';
-const NKEY = 'couples_names_v1';
+<!-- Firebase -->
+<script type="module">
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
+import { getFirestore, collection, addDoc, onSnapshot, deleteDoc, doc, query, orderBy } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
 
-function load(key, def) {
-  try { const d = localStorage.getItem(key); return d ? JSON.parse(d) : def; } catch { return def; }
-}
-function save(key, data) {
-  try { localStorage.setItem(key, JSON.stringify(data)); } catch {}
-}
+const firebaseConfig = {
+  apiKey: "AIzaSyBCAxv-u1rlQLonW0HLSahbmJLXtuVfbEA",
+  authDomain: "budget-1385f.firebaseapp.com",
+  projectId: "budget-1385f",
+  storageBucket: "budget-1385f.firebasestorage.app",
+  messagingSenderId: "554876329471",
+  appId: "1:554876329471:web:53f3fb8bbb95f060ac1bca"
+};
 
-let expenses = load(KEY, []);
-let settlements = load(SKEY, []);
-let names = load(NKEY, { p1: 'Hiraj', p2: 'Ress' });
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+let expenses = [];
+let settlements = [];
 let currentWho = 'p1';
 let formPayer = 'p1';
 let activeMonth = null;
 
-// ── Names ─────────────────────────────────────────────────────────────────────
-function updateNameDisplay() {
-  document.getElementById('whoP1').textContent = names.p1;
-  document.getElementById('whoP2').textContent = names.p2;
-  document.getElementById('form-p1').textContent = names.p1;
-  document.getElementById('form-p2').textContent = names.p2;
+// ── Sync status ───────────────────────────────────────────────────────────────
+function setSyncBar(state) {
+  const bar = document.getElementById('sync-bar');
+  if (state === 'live') { bar.className = 'sync-bar live'; bar.textContent = '🟢 Live sync — both phones connected'; }
+  else if (state === 'err') { bar.className = 'sync-bar err'; bar.textContent = '🔴 Sync error — check connection'; }
+  else { bar.className = 'sync-bar'; bar.textContent = '⏳ Connecting...'; }
 }
 
-// ── Who toggle ────────────────────────────────────────────────────────────────
-function setWho(who) {
-  currentWho = who;
-  document.getElementById('whoP1').classList.toggle('active', who === 'p1');
-  document.getElementById('whoP2').classList.toggle('active', who === 'p2');
+// ── Real-time listeners ───────────────────────────────────────────────────────
+const expQ = query(collection(db, 'expenses'), orderBy('createdAt', 'desc'));
+onSnapshot(expQ, snap => {
+  expenses = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+  setSyncBar('live');
   renderAll();
-}
+}, () => setSyncBar('err'));
 
-function selectPayer(who) {
-  formPayer = who;
-  document.getElementById('form-p1').classList.toggle('sel', who === 'p1');
-  document.getElementById('form-p2').classList.toggle('sel', who === 'p2');
-}
-
-// ── Pages ─────────────────────────────────────────────────────────────────────
-function showPage(name) {
-  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-  document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
-  document.getElementById('page-' + name).classList.add('active');
-  const tabs = document.querySelectorAll('.nav-tab');
-  const map = ['dashboard','add','history','split'];
-  tabs[map.indexOf(name)]?.classList.add('active');
+const setQ = query(collection(db, 'settlements'), orderBy('createdAt', 'desc'));
+onSnapshot(setQ, snap => {
+  settlements = snap.docs.map(d => ({ id: d.id, ...d.data() }));
   renderAll();
-}
+});
 
 // ── Add expense ───────────────────────────────────────────────────────────────
-function addExpense() {
+window.addExpense = async () => {
   const desc = document.getElementById('f-desc').value.trim();
   const amount = parseFloat(document.getElementById('f-amount').value);
   const cat = document.getElementById('f-cat').value;
   const date = document.getElementById('f-date').value || new Date().toISOString().split('T')[0];
   const split = document.getElementById('f-split').value;
   const note = document.getElementById('f-note').value.trim();
-
   if (!desc) { showToast('Add a description'); return; }
   if (!amount || amount <= 0) { showToast('Enter a valid amount'); return; }
-
-  const exp = { id: Date.now(), payer: formPayer, desc, amount, cat, date, split, note };
-  expenses.unshift(exp);
-  save(KEY, expenses);
-
+  await addDoc(collection(db, 'expenses'), { payer: formPayer, desc, amount, cat, date, split, note, createdAt: Date.now() });
   document.getElementById('f-desc').value = '';
   document.getElementById('f-amount').value = '';
   document.getElementById('f-note').value = '';
-
-  showToast('✓ Expense added');
-  renderAll();
+  showToast('✓ Expense added — syncing to both phones');
   showPage('dashboard');
-}
+};
 
-// ── Calculations ──────────────────────────────────────────────────────────────
-function getMonthKey(dateStr) {
-  const d = new Date(dateStr);
-  return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}`;
-}
-function getMonthLabel(key) {
-  const [y,m] = key.split('-');
-  return new Date(y, m-1, 1).toLocaleDateString('en-CA', {month:'long', year:'numeric'});
-}
+// ── Delete expense ────────────────────────────────────────────────────────────
+window.delExp = async (id) => {
+  await deleteDoc(doc(db, 'expenses', id));
+  showToast('Expense removed');
+};
 
-function calcOwed(exps) {
-  let p1Total = 0, p2Total = 0, p1Share = 0, p2Share = 0;
-  exps.forEach(e => {
-    const amt = e.amount;
-    if (e.payer === 'p1') p1Total += amt; else p2Total += amt;
-    if (e.split === '50/50') { p1Share += amt/2; p2Share += amt/2; }
-    else if (e.split === 'Hiraj pays all') { p1Share += amt; }
-    else if (e.split === 'Ress pays all') { p2Share += amt; }
-    else { p1Share += amt/2; p2Share += amt/2; }
-  });
-  const combined = p1Total + p2Total;
-  const p1Net = p1Total - p1Share;
-  const p2Net = p2Total - p2Share;
-  return { p1Total, p2Total, combined, p1Share, p2Share, p1Net, p2Net };
-}
+// ── Settle ────────────────────────────────────────────────────────────────────
+window.settle = async (amount, payer) => {
+  await addDoc(collection(db, 'settlements'), { payer, amount, createdAt: Date.now(), date: new Date().toLocaleDateString('en-CA', {month:'short',day:'numeric',year:'numeric'}) });
+  showToast('✓ Settled ' + fmt(amount));
+};
 
+// ── Helpers ───────────────────────────────────────────────────────────────────
+function fmt(n) { return '$' + Math.abs(n).toLocaleString('en-CA', {minimumFractionDigits:2,maximumFractionDigits:2}); }
+function getMonthKey(dateStr) { const d = new Date(dateStr); return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}`; }
+function getMonthLabel(key) { const [y,m] = key.split('-'); return new Date(y,m-1,1).toLocaleDateString('en-CA',{month:'long',year:'numeric'}); }
 function getMonths() {
   const months = [...new Set(expenses.map(e => getMonthKey(e.date)))].sort().reverse();
-  if (months.length === 0) {
-    const now = new Date();
-    months.push(`${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}`);
-  }
+  if (!months.length) { const n = new Date(); months.push(`${n.getFullYear()}-${String(n.getMonth()+1).padStart(2,'0')}`); }
   return months;
 }
-
-function thisMonthExps() {
-  const key = activeMonth || getMonths()[0];
-  return expenses.filter(e => getMonthKey(e.date) === key);
+function thisMonthExps() { const key = activeMonth || getMonths()[0]; return expenses.filter(e => getMonthKey(e.date) === key); }
+function calcOwed(exps) {
+  let p1Total=0,p2Total=0,p1Share=0,p2Share=0;
+  exps.forEach(e => {
+    const a = e.amount;
+    if (e.payer==='p1') p1Total+=a; else p2Total+=a;
+    if (e.split==='50/50'){p1Share+=a/2;p2Share+=a/2;}
+    else if (e.split==='Hiraj pays all'){p1Share+=a;}
+    else if (e.split==='Ress pays all'){p2Share+=a;}
+    else {p1Share+=a/2;p2Share+=a/2;}
+  });
+  return {p1Total,p2Total,combined:p1Total+p2Total,p1Net:p1Total-p1Share,p2Net:p2Total-p2Share};
 }
 
-function fmt(n) { return '$' + Math.abs(n).toLocaleString('en-CA', {minimumFractionDigits:2, maximumFractionDigits:2}); }
-
-// ── Render functions ──────────────────────────────────────────────────────────
+// ── Render ────────────────────────────────────────────────────────────────────
 function renderAll() {
   const months = getMonths();
-  if (!activeMonth) activeMonth = months[0];
-  renderDashboard();
-  renderMonthTabs(months);
-  renderHistory();
-  renderSplit();
+  if (!activeMonth || !months.includes(activeMonth)) activeMonth = months[0];
+  renderDashboard(); renderMonthTabs(months); renderHistory(); renderSplit();
 }
 
 function renderDashboard() {
   const exps = thisMonthExps();
-  const { p1Total, p2Total, combined, p1Net, p2Net } = calcOwed(exps);
-
-  // Owed banner
+  const {p1Total,p2Total,combined,p1Net,p2Net} = calcOwed(exps);
   const owed = document.getElementById('owed-banner');
   if (Math.abs(p1Net) < 0.01) {
-    owed.className = 'owed-banner balanced';
-    owed.innerHTML = `<div><div class="owed-text">✓ All settled up!</div><div style="font-size:13px;color:var(--sub);margin-top:4px">You're perfectly balanced this month</div></div><div class="owed-amount" style="color:var(--green)">${fmt(0)}</div>`;
+    owed.className='owed-banner balanced';
+    owed.innerHTML=`<div><div class="owed-text">✓ All settled up!</div><div style="font-size:13px;color:var(--sub);margin-top:4px">Perfectly balanced this month</div></div><div class="owed-amount" style="color:var(--green)">${fmt(0)}</div>`;
   } else if (p1Net < 0) {
-    owed.className = 'owed-banner p1owes';
-    owed.innerHTML = `<div><div class="owed-text" style="color:var(--p1)">${names.p1} owes ${names.p2}</div><div style="font-size:13px;color:var(--sub);margin-top:4px">Based on this month's expenses</div></div><div style="display:flex;align-items:center;gap:12px"><div class="owed-amount" style="color:var(--p1)">${fmt(Math.abs(p1Net))}</div><button class="settle-btn" onclick="settle(${Math.abs(p1Net).toFixed(2)},'p1')">Settle</button></div>`;
+    owed.className='owed-banner p1owes';
+    owed.innerHTML=`<div><div class="owed-text" style="color:var(--p1)">Hiraj owes Ress</div><div style="font-size:13px;color:var(--sub);margin-top:4px">Based on this month</div></div><div style="display:flex;align-items:center;gap:12px"><div class="owed-amount" style="color:var(--p1)">${fmt(Math.abs(p1Net))}</div><button class="settle-btn" onclick="settle(${Math.abs(p1Net).toFixed(2)},'p1')">Settle</button></div>`;
   } else {
-    owed.className = 'owed-banner p2owes';
-    owed.innerHTML = `<div><div class="owed-text" style="color:var(--p2)">${names.p2} owes ${names.p1}</div><div style="font-size:13px;color:var(--sub);margin-top:4px">Based on this month's expenses</div></div><div style="display:flex;align-items:center;gap:12px"><div class="owed-amount" style="color:var(--p2)">${fmt(Math.abs(p2Net))}</div><button class="settle-btn" onclick="settle(${Math.abs(p2Net).toFixed(2)},'p2')">Settle</button></div>`;
+    owed.className='owed-banner p2owes';
+    owed.innerHTML=`<div><div class="owed-text" style="color:var(--p2)">Ress owes Hiraj</div><div style="font-size:13px;color:var(--sub);margin-top:4px">Based on this month</div></div><div style="display:flex;align-items:center;gap:12px"><div class="owed-amount" style="color:var(--p2)">${fmt(Math.abs(p2Net))}</div><button class="settle-btn" onclick="settle(${Math.abs(p2Net).toFixed(2)},'p2')">Settle</button></div>`;
   }
-
-  // Metrics
-  document.getElementById('summary-grid').innerHTML = `
-    <div class="metric"><div class="label">Combined</div><div class="val">${fmt(combined)}</div><div class="sub">This month total</div></div>
-    <div class="metric"><div class="label">${names.p1} paid</div><div class="val p1">${fmt(p1Total)}</div><div class="sub">${exps.filter(e=>e.payer==='p1').length} expenses</div></div>
-    <div class="metric"><div class="label">${names.p2} paid</div><div class="val p2">${fmt(p2Total)}</div><div class="sub">${exps.filter(e=>e.payer==='p2').length} expenses</div></div>
-    <div class="metric"><div class="label">Each should pay</div><div class="val">${fmt(combined/2)}</div><div class="sub">50/50 target</div></div>
-  `;
-
-  // Recent list
-  const recent = exps.slice(0, 8);
-  document.getElementById('recent-list').innerHTML = recent.length
-    ? `<div class="exp-list">${recent.map(expHTML).join('')}</div>`
-    : emptyState('No expenses this month', 'Add your first expense using the Add tab');
-
-  // Category breakdown
-  const cats = {};
-  exps.forEach(e => { cats[e.cat] = (cats[e.cat] || 0) + e.amount; });
-  const sorted = Object.entries(cats).sort((a,b) => b[1]-a[1]);
-  const max = sorted[0]?.[1] || 1;
-  document.getElementById('cat-breakdown').innerHTML = sorted.length
-    ? sorted.map(([cat, amt]) => `
-      <div class="cat-row">
-        <div class="cat-icon">${cat.split(' ')[0]}</div>
-        <div class="cat-info">
-          <div class="cat-label">${cat.split(' ').slice(1).join(' ')}</div>
-          <div class="cat-bar-wrap"><div class="cat-bar" style="width:${(amt/max*100).toFixed(0)}%"></div></div>
-        </div>
-        <div class="cat-amount">${fmt(amt)}</div>
-      </div>`).join('')
-    : `<div style="color:var(--sub);font-size:13px;padding:12px 0">No data yet</div>`;
+  document.getElementById('summary-grid').innerHTML=`
+    <div class="metric"><div class="label">Combined</div><div class="val">${fmt(combined)}</div><div class="sub">This month</div></div>
+    <div class="metric"><div class="label">Hiraj paid</div><div class="val p1">${fmt(p1Total)}</div><div class="sub">${exps.filter(e=>e.payer==='p1').length} expenses</div></div>
+    <div class="metric"><div class="label">Ress paid</div><div class="val p2">${fmt(p2Total)}</div><div class="sub">${exps.filter(e=>e.payer==='p2').length} expenses</div></div>
+    <div class="metric"><div class="label">Each should pay</div><div class="val">${fmt(combined/2)}</div><div class="sub">50/50 target</div></div>`;
+  document.getElementById('recent-list').innerHTML = exps.length ? `<div class="exp-list">${exps.slice(0,8).map(expHTML).join('')}</div>` : emptyHTML();
+  const cats={};
+  exps.forEach(e=>{cats[e.cat]=(cats[e.cat]||0)+e.amount;});
+  const sorted=Object.entries(cats).sort((a,b)=>b[1]-a[1]);
+  const max=sorted[0]?.[1]||1;
+  document.getElementById('cat-breakdown').innerHTML = sorted.length ? sorted.map(([cat,amt])=>`
+    <div class="cat-row"><div class="cat-icon">${cat.split(' ')[0]}</div>
+    <div class="cat-info"><div class="cat-label">${cat.split(' ').slice(1).join(' ')}</div>
+    <div class="cat-bar-wrap"><div class="cat-bar" style="width:${(amt/max*100).toFixed(0)}%"></div></div></div>
+    <div class="cat-amount">${fmt(amt)}</div></div>`).join('') : '<div style="color:var(--sub);font-size:13px">No data yet</div>';
 }
 
 function expHTML(e) {
-  const d = new Date(e.date + 'T12:00:00');
-  const dateStr = d.toLocaleDateString('en-CA', {month:'short', day:'numeric'});
+  const d = new Date(e.date+'T12:00:00');
+  const ds = d.toLocaleDateString('en-CA',{month:'short',day:'numeric'});
   return `<div class="exp-item">
-    <div class="exp-avatar ${e.payer}">${e.payer==='p1'?names.p1[0]:names.p2[0]}</div>
-    <div class="exp-cat">${e.cat.split(' ')[0]}</div>
-    <div class="exp-info">
-      <div class="exp-desc">${e.desc}</div>
-      <div class="exp-meta">${dateStr} · ${e.cat.split(' ').slice(1).join(' ')} · ${e.split}</div>
-    </div>
+    <div class="exp-avatar ${e.payer}">${e.payer==='p1'?'H':'R'}</div>
+    <div style="font-size:18px">${e.cat.split(' ')[0]}</div>
+    <div class="exp-info"><div class="exp-desc">${e.desc}</div><div class="exp-meta">${ds} · ${e.cat.split(' ').slice(1).join(' ')} · ${e.split}</div></div>
     <div class="exp-amount">${fmt(e.amount)}</div>
-    <button class="exp-del" onclick="delExp(${e.id})">×</button>
-  </div>`;
+    <button class="exp-del" onclick="delExp('${e.id}')">×</button></div>`;
 }
 
-function emptyState(title, sub) {
-  return `<div class="empty-state"><div class="icon">💸</div><p style="font-weight:600;margin-bottom:4px">${title}</p><p>${sub}</p></div>`;
-}
+function emptyHTML() { return `<div class="empty-state"><div style="font-size:36px;margin-bottom:10px">💸</div><p style="font-weight:600;margin-bottom:4px">No expenses yet</p><p style="font-size:14px">Add your first using the Add tab</p></div>`; }
 
 function renderMonthTabs(months) {
-  document.getElementById('month-tabs').innerHTML = months.map(m =>
-    `<div class="month-tab ${m===activeMonth?'active':''}" onclick="setMonth('${m}')">${getMonthLabel(m)}</div>`
-  ).join('');
-}
-
-function setMonth(key) {
-  activeMonth = key;
-  renderAll();
+  document.getElementById('month-tabs').innerHTML = months.map(m=>`<div class="month-tab ${m===activeMonth?'active':''}" onclick="setMonth('${m}')">${getMonthLabel(m)}</div>`).join('');
 }
 
 function renderHistory() {
   const exps = thisMonthExps();
-  document.getElementById('history-list').innerHTML = exps.length
-    ? `<div class="exp-list">${exps.map(expHTML).join('')}</div>`
-    : emptyState('Nothing here yet', 'Add expenses using the Add tab');
+  document.getElementById('history-list').innerHTML = exps.length ? `<div class="exp-list">${exps.map(expHTML).join('')}</div>` : emptyHTML();
 }
 
 function renderSplit() {
   const months = getMonths();
-  let html = '<table class="split-table"><thead><tr><th>Month</th><th>' + names.p1 + ' paid</th><th>' + names.p2 + ' paid</th><th>Combined</th><th>Balance</th></tr></thead><tbody>';
-  months.forEach(m => {
-    const exps = expenses.filter(e => getMonthKey(e.date) === m);
-    const { p1Total, p2Total, combined, p1Net } = calcOwed(exps);
-    const bal = p1Net >= 0
-      ? `<span class="pill p2">${names.p2} owes ${fmt(p1Net)}</span>`
-      : `<span class="pill p1">${names.p1} owes ${fmt(Math.abs(p1Net))}</span>`;
-    html += `<tr><td style="font-weight:500">${getMonthLabel(m)}</td><td>${fmt(p1Total)}</td><td>${fmt(p2Total)}</td><td>${fmt(combined)}</td><td>${bal}</td></tr>`;
+  let html='<table class="split-table"><thead><tr><th>Month</th><th>Hiraj paid</th><th>Ress paid</th><th>Combined</th><th>Balance</th></tr></thead><tbody>';
+  months.forEach(m=>{
+    const exps=expenses.filter(e=>getMonthKey(e.date)===m);
+    const {p1Total,p2Total,combined,p1Net}=calcOwed(exps);
+    const bal=p1Net>=0?`<span class="pill p2">Ress owes ${fmt(p1Net)}</span>`:`<span class="pill p1">Hiraj owes ${fmt(Math.abs(p1Net))}</span>`;
+    html+=`<tr><td style="font-weight:500">${getMonthLabel(m)}</td><td>${fmt(p1Total)}</td><td>${fmt(p2Total)}</td><td>${fmt(combined)}</td><td>${bal}</td></tr>`;
   });
-  html += '</tbody></table>';
-  document.getElementById('split-content').innerHTML = html;
-
-  const sl = document.getElementById('settlement-list');
-  sl.innerHTML = settlements.length
-    ? `<div class="exp-list">${settlements.slice(0,10).map(s=>`
-      <div class="exp-item">
-        <div class="exp-avatar ${s.payer}">${s.payer==='p1'?names.p1[0]:names.p2[0]}</div>
-        <div class="exp-info"><div class="exp-desc">Settlement payment</div><div class="exp-meta">${s.date}</div></div>
-        <div class="exp-amount" style="color:var(--green)">${fmt(s.amount)}</div>
-        <span class="pill green">Settled</span>
-      </div>`).join('')}</div>`
+  html+='</tbody></table>';
+  document.getElementById('split-content').innerHTML=html;
+  document.getElementById('settlement-list').innerHTML = settlements.length
+    ? `<div class="exp-list">${settlements.slice(0,10).map(s=>`<div class="exp-item"><div class="exp-avatar ${s.payer}">${s.payer==='p1'?'H':'R'}</div><div class="exp-info"><div class="exp-desc">Settlement payment</div><div class="exp-meta">${s.date}</div></div><div class="exp-amount" style="color:var(--green)">${fmt(s.amount)}</div><span class="pill green">Settled</span></div>`).join('')}</div>`
     : `<div style="color:var(--sub);font-size:13px;padding:12px 0">No settlements yet</div>`;
 }
 
-// ── Actions ───────────────────────────────────────────────────────────────────
-function delExp(id) {
-  expenses = expenses.filter(e => e.id !== id);
-  save(KEY, expenses);
+// ── UI helpers ────────────────────────────────────────────────────────────────
+window.showPage = (name) => {
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('page-'+name).classList.add('active');
+  const tabs=document.querySelectorAll('.nav-tab');
+  ['dashboard','add','history','split'].forEach((n,i)=>{ if(n===name) tabs[i]?.classList.add('active'); });
   renderAll();
-  showToast('Expense removed');
-}
+};
 
-function settle(amount, payer) {
-  const s = { id: Date.now(), payer, amount, date: new Date().toLocaleDateString('en-CA', {month:'short', day:'numeric', year:'numeric'}) };
-  settlements.unshift(s);
-  save(SKEY, settlements);
-  showToast('✓ Settled ' + fmt(amount));
-  renderAll();
-}
+window.setWho = (who) => {
+  currentWho=who;
+  document.getElementById('whoP1').classList.toggle('active',who==='p1');
+  document.getElementById('whoP2').classList.toggle('active',who==='p2');
+};
+
+window.selectPayer = (who) => {
+  formPayer=who;
+  document.getElementById('form-p1').classList.toggle('sel',who==='p1');
+  document.getElementById('form-p2').classList.toggle('sel',who==='p2');
+};
+
+window.setMonth = (key) => { activeMonth=key; renderAll(); };
 
 function showToast(msg) {
-  const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), 2500);
+  const t=document.getElementById('toast');
+  t.textContent=msg; t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),2500);
 }
 
-// ── Init ──────────────────────────────────────────────────────────────────────
 document.getElementById('f-date').value = new Date().toISOString().split('T')[0];
-updateNameDisplay();
-renderAll();
 </script>
 </body>
 </html>
