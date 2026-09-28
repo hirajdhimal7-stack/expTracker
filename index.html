@@ -2,551 +2,421 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Hiraj & Ress — Shared Budget</title>
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Roster">
+<title>Roster</title>
 <style>
-:root{--h:#1a1a2e;--p1:#7c6af7;--p1l:#ede9ff;--p2:#f76a8c;--p2l:#ffeef3;--bg:#f4f3f8;--card:#ffffff;--text:#1a1a2e;--sub:#6b6880;--border:#e8e6f0;--green:#22c55e;--greenl:#dcfce7;--amber:#f59e0b;--amberl:#fef3c7;--red:#ef4444;--redl:#fee2e2;--r:16px;--rs:10px}
-*{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
-.nav{background:var(--h);padding:0 20px;display:flex;align-items:center;justify-content:space-between;height:60px;position:sticky;top:0;z-index:100}
-.nav-logo{display:flex;align-items:center;gap:10px}
-.nav-logo .dot{width:8px;height:8px;border-radius:50%}
-.dot.p1{background:var(--p1)}.dot.p2{background:var(--p2)}
-.nav-logo span{color:white;font-weight:600;font-size:15px}
-.nav-tabs{display:flex;gap:4px}
-.nav-tab{padding:7px 14px;border-radius:8px;font-size:13px;font-weight:500;cursor:pointer;color:rgba(255,255,255,0.55);border:none;background:none;transition:all 0.15s}
-.nav-tab.active,.nav-tab:hover{background:rgba(255,255,255,0.12);color:white}
-.who-badge{display:flex;gap:6px;align-items:center}
-.who-btn{padding:6px 14px;border-radius:20px;font-size:12px;font-weight:600;cursor:pointer;border:2px solid transparent;transition:all 0.15s}
-.who-btn.p1{background:var(--p1l);color:var(--p1)}.who-btn.p2{background:var(--p2l);color:var(--p2)}
-.who-btn.active.p1{background:var(--p1);color:white;border-color:var(--p1)}
-.who-btn.active.p2{background:var(--p2);color:white;border-color:var(--p2)}
-.page{display:none;padding:20px;max-width:800px;margin:0 auto}
-.page.active{display:block}
-.card{background:var(--card);border-radius:var(--r);padding:20px;margin-bottom:16px;border:1px solid var(--border)}
-.card-title{font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;color:var(--sub);margin-bottom:16px}
-.summary-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-bottom:16px}
-.metric{background:var(--card);border-radius:var(--r);padding:18px;border:1px solid var(--border)}
-.metric .label{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.07em;color:var(--sub);margin-bottom:8px}
-.metric .val{font-family:'DM Mono',monospace;font-size:22px;font-weight:500}
-.metric .val.p1{color:var(--p1)}.metric .val.p2{color:var(--p2)}.metric .val.green{color:var(--green)}
-.metric .sub{font-size:11px;color:var(--sub);margin-top:4px}
-.owed-banner{border-radius:var(--r);padding:20px 24px;display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:12px}
-.owed-banner.balanced{background:var(--greenl);border:1px solid #bbf7d0}
-.owed-banner.p1owes{background:var(--p1l);border:1px solid #c4b5fd}
-.owed-banner.p2owes{background:var(--p2l);border:1px solid #fda4af}
-.owed-text{font-size:16px;font-weight:600}
-.owed-amount{font-family:'DM Mono',monospace;font-size:28px;font-weight:500}
-.settle-btn{padding:10px 20px;border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;border:none;background:var(--h);color:white}
-.add-form{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.add-form .full{grid-column:1/-1}
-.field label{font-size:12px;font-weight:600;color:var(--sub);margin-bottom:6px;display:block;text-transform:uppercase;letter-spacing:0.05em}
-.field input,.field select,.field textarea{width:100%;border:1.5px solid var(--border);border-radius:var(--rs);font-size:14px;font-family:'DM Sans',sans-serif;padding:0 12px;background:var(--bg);color:var(--text);outline:none;transition:border-color 0.15s;height:42px}
-.field textarea{height:60px;padding:10px 12px;resize:none}
-.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--p1)}
-.who-select{display:flex;gap:8px}
-.who-opt{flex:1;padding:10px;border-radius:var(--rs);border:2px solid var(--border);text-align:center;cursor:pointer;font-size:13px;font-weight:600;transition:all 0.15s;color:var(--sub)}
-.who-opt.p1.sel{background:var(--p1);color:white;border-color:var(--p1)}
-.who-opt.p2.sel{background:var(--p2);color:white;border-color:var(--p2)}
-.add-btn{width:100%;height:46px;border-radius:var(--rs);border:none;background:var(--h);color:white;font-size:14px;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer;margin-top:4px}
-.exp-list{display:flex;flex-direction:column;gap:10px}
-.exp-item{display:flex;align-items:center;gap:14px;padding:14px 16px;border-radius:var(--rs);background:var(--bg);border:1px solid var(--border)}
-.exp-avatar{width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0}
-.exp-avatar.p1{background:var(--p1l);color:var(--p1)}.exp-avatar.p2{background:var(--p2l);color:var(--p2)}
-.exp-info{flex:1}.exp-desc{font-size:14px;font-weight:500}
-.exp-meta{font-size:12px;color:var(--sub);margin-top:2px}
-.exp-amount{font-family:'DM Mono',monospace;font-size:15px;font-weight:500}
-.exp-del{background:none;border:none;color:var(--sub);cursor:pointer;font-size:18px;padding:4px;border-radius:6px;line-height:1}
-.exp-del:hover{background:var(--redl);color:var(--red)}
-.empty-state{text-align:center;padding:40px 20px;color:var(--sub)}
-.month-tabs{display:flex;gap:6px;overflow-x:auto;padding-bottom:4px;margin-bottom:16px}
-.month-tab{padding:7px 16px;border-radius:20px;font-size:12px;font-weight:600;cursor:pointer;white-space:nowrap;border:1.5px solid var(--border);background:var(--card);color:var(--sub);transition:all 0.15s}
-.month-tab.active{background:var(--h);color:white;border-color:var(--h)}
-.cat-row{display:flex;align-items:center;gap:12px;margin-bottom:10px}
-.cat-icon{font-size:20px;width:32px;text-align:center}
-.cat-info{flex:1}.cat-label{font-size:13px;font-weight:500}
-.cat-bar-wrap{height:6px;background:var(--bg);border-radius:3px;margin-top:4px;overflow:hidden}
-.cat-bar{height:100%;border-radius:3px;background:var(--p1);transition:width 0.4s}
-.cat-amount{font-family:'DM Mono',monospace;font-size:13px;font-weight:500}
-.split-table{width:100%;border-collapse:collapse;font-size:13px}
-.split-table th{text-align:left;color:var(--sub);font-weight:600;font-size:11px;text-transform:uppercase;letter-spacing:0.07em;padding:8px 0;border-bottom:1px solid var(--border)}
-.split-table td{padding:10px 0;border-bottom:1px solid var(--border)}
-.split-table tr:last-child td{border-bottom:none}
-.pill{display:inline-block;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:700}
-.pill.p1{background:var(--p1l);color:var(--p1)}.pill.p2{background:var(--p2l);color:var(--p2)}.pill.green{background:var(--greenl);color:var(--green)}
-.sync-bar{background:#1a1a2e;color:rgba(255,255,255,0.7);text-align:center;font-size:11px;padding:5px;letter-spacing:0.05em}
-.sync-bar.live{background:#064e3b;color:#6ee7b7}
-.sync-bar.err{background:#7f1d1d;color:#fca5a5}
-.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--h);color:white;padding:12px 24px;border-radius:12px;font-size:13px;font-weight:500;z-index:999;transition:transform 0.3s;pointer-events:none;white-space:nowrap}
-.toast.show{transform:translateX(-50%) translateY(0)}
-@media(max-width:480px){
-  .add-form{grid-template-columns:1fr}
-  .add-form .full{grid-column:1}
-  .nav-tabs{display:none}
-  .summary-grid{grid-template-columns:1fr 1fr}
-}
-
-/* ── Mobile bottom navigation ───────────────────────────── */
-.mobile-bottom-nav {
-  display: none;
-}
-
-@media (max-width: 600px) {
-  body {
-    padding-bottom: 78px;
-  }
-
-  .mobile-bottom-nav {
-    position: fixed;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    height: 72px;
-    background: rgba(255,255,255,0.97);
-    border-top: 1px solid var(--border);
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    align-items: center;
-    z-index: 200;
-    box-shadow: 0 -4px 20px rgba(0,0,0,0.08);
-    padding: 6px 8px calc(6px + env(safe-area-inset-bottom));
-  }
-
-  .mobile-nav-btn {
-    border: none;
-    background: none;
-    color: var(--sub);
-    font-family: 'DM Sans', sans-serif;
-    font-size: 10px;
-    font-weight: 600;
-    cursor: pointer;
-    height: 58px;
-    border-radius: 12px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 3px;
-    transition: all 0.15s;
-  }
-
-  .mobile-nav-btn .nav-icon {
-    font-size: 22px;
-    line-height: 1;
-  }
-
-  .mobile-nav-btn.active {
-    color: var(--p1);
-    background: var(--p1l);
-  }
-
-  .mobile-nav-btn.add-mobile {
-    color: white;
-  }
-
-  .mobile-nav-btn.add-mobile .nav-icon {
-    width: 44px;
-    height: 44px;
-    border-radius: 50%;
-    background: var(--h);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 25px;
-    box-shadow: 0 4px 12px rgba(26,26,46,0.25);
-    margin-top: -12px;
-    border: 4px solid white;
-  }
-
-  .mobile-nav-btn.add-mobile span:last-child {
-    color: var(--h);
-    margin-top: -2px;
-  }
-
-  .mobile-nav-btn.add-mobile.active .nav-icon {
-    background: var(--p1);
-  }
-
-  .page {
-    padding: 16px;
-  }
-
-  .nav {
-    height: 56px;
-    padding: 0 14px;
-  }
-
-  .nav-logo span {
-    font-size: 14px;
-  }
-
-  .who-btn {
-    padding: 5px 10px;
-    font-size: 11px;
-  }
-
-  .summary-grid {
-    grid-template-columns: 1fr 1fr;
-  }
-
-  .card {
-    padding: 16px;
-  }
-}
-
+:root{--bg:#0A0E14;--surface:#12161F;--surface-2:#181D28;--border:#232838;--border-2:#2E3548;--text:#E8EAED;--text-dim:#8B92A5;--text-faint:#565D72;--gold:#E8A33D;--gold-dim:#8A6529;--green:#3FBF74;--green-dim:#1E4A32;--red:#F0625F;--red-dim:#4A2320;--mono:ui-monospace,'SF Mono',Menlo,monospace;--sans:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;background:var(--bg);color:var(--text);font-family:var(--sans);overflow-x:hidden}
+body{padding:env(safe-area-inset-top) 0 env(safe-area-inset-bottom);min-height:100vh}
+.wrap{max-width:560px;margin:0 auto;padding:0 16px 100px}
+.topbar{display:flex;align-items:center;justify-content:space-between;padding:18px 16px 8px;max-width:560px;margin:0 auto}
+.brand{font-size:13px;letter-spacing:.14em;color:var(--text-faint);text-transform:uppercase;font-weight:600}
+.topbar-right{display:flex;align-items:center;gap:12px}
+.clock-txt{font-family:var(--mono);font-size:12px;color:var(--text-faint)}
+.sync-dot{width:8px;height:8px;border-radius:50%;background:var(--text-faint)}
+.sync-dot.ok{background:var(--green)}.sync-dot.busy{background:var(--gold);animation:pulse 1s infinite}.sync-dot.err{background:var(--red)}
+@keyframes pulse{50%{opacity:.35}}
+.icon-btn{width:30px;height:30px;border-radius:8px;background:var(--surface);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;color:var(--text-dim);font-size:15px;cursor:pointer}
+.tabs{display:flex;margin-top:14px;border-bottom:1px solid var(--border);overflow-x:auto}
+.tabs::-webkit-scrollbar{display:none}
+.tab{padding:10px 4px;margin-right:20px;font-size:13px;color:var(--text-faint);cursor:pointer;border-bottom:2px solid transparent;font-weight:600;white-space:nowrap}
+.tab.active{color:var(--gold);border-bottom-color:var(--gold)}
+.panel{display:none}.panel.visible{display:block}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:18px;margin-top:16px}
+.card-title{font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:var(--text-dim);margin-bottom:12px;font-weight:600;display:flex;justify-content:space-between;align-items:center}
+select,.text-input{flex:1;background:var(--surface-2);border:1px solid var(--border);border-radius:10px;padding:11px 13px;color:var(--text);font-family:var(--sans);font-size:14px;outline:none;-webkit-appearance:none;appearance:none;min-width:0}
+select{background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='6'><path d='M0 0l5 6 5-6z' fill='%238B92A5'/></svg>");background-repeat:no-repeat;background-position:right 12px center;padding-right:28px}
+.text-input::placeholder{color:var(--text-faint)}
+.field-row{display:flex;gap:8px;margin-bottom:10px}
+.add-btn{width:100%;padding:13px 0;border-radius:10px;border:none;font-family:var(--sans);font-size:15px;font-weight:600;cursor:pointer;background:var(--gold);color:#1A1200}
+.add-btn:active{opacity:.85}
+.add-btn.secondary{background:var(--surface-2);color:var(--text);border:1px solid var(--border-2)}
+.hint{font-size:12px;color:var(--text-faint);margin-top:10px;line-height:1.5}
+.dow-row{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;margin-top:8px}
+.dow-cell{text-align:center;padding:10px 2px;border-radius:8px;background:var(--surface-2);border:1px solid var(--border);cursor:pointer;font-size:11px;font-weight:600;color:var(--text-faint)}
+.dow-cell .d{font-size:9px;text-transform:uppercase;display:block}
+.dow-cell.on{background:var(--jc-dim);border-color:var(--jc);color:var(--jc)}
+.job-card{border:1px solid var(--border);border-radius:12px;padding:14px;margin-top:14px}
+.job-card-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+.job-color-dot{width:10px;height:10px;border-radius:50%;flex:0 0 auto;margin-right:8px}
+.job-title-row{display:flex;align-items:center;flex:1;min-width:0}
+.job-name-input{background:transparent;border:none;color:var(--text);font-size:15px;font-weight:700;outline:none;flex:1;min-width:0;padding:2px 0}
+.job-del{color:var(--text-faint);font-size:18px;cursor:pointer;padding:2px 6px}
+.week-label{font-size:11px;color:var(--text-faint);text-transform:uppercase;letter-spacing:.06em;margin-top:12px;font-weight:600;display:flex;justify-content:space-between}
+.week-label span[data-a]{cursor:pointer;text-transform:none;font-weight:400}
+.anchor-hint{font-size:11.5px;color:var(--text-faint);margin-top:10px}
+.trio{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.lbl{font-size:10.5px;color:var(--text-faint);text-transform:uppercase;letter-spacing:.05em;margin-bottom:4px;display:block}
+.cal-head,.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}
+.cal-head{margin:6px 0 8px}
+.cal-head span{text-align:center;font-size:11px;color:var(--text-faint);text-transform:uppercase;font-weight:600}
+.cal-cell{min-height:92px;border:1px solid var(--border);border-radius:10px;background:var(--surface-2);padding:6px;display:flex;flex-direction:column;cursor:pointer;overflow:hidden}
+.cal-cell.empty{background:transparent;border-color:transparent;cursor:default}
+.cal-cell.today{border:2px solid var(--gold)}
+.cal-cell.selected{background:var(--surface);box-shadow:0 0 0 1px var(--gold-dim) inset;border-color:var(--gold)}
+.cal-daynum{font-family:var(--mono);font-size:13px;color:var(--text-dim);font-weight:700}
+.cal-cell.today .cal-daynum{color:var(--gold)}
+.chips{display:flex;flex-direction:column;gap:3px;margin-top:5px;flex:1;overflow:hidden}
+.chip{font-size:10px;padding:2px 6px;border-radius:5px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;background:var(--cb);color:var(--cf)}
+.chip.extra{border:1px dashed currentColor}
+.dd{background:var(--surface-2);border:1px solid var(--border-2);border-radius:12px;padding:14px;margin-top:14px}
+.dd-title{font-size:14px;font-weight:600;margin-bottom:10px;display:flex;justify-content:space-between;align-items:center}
+.dd-title .x{cursor:pointer;color:var(--text-faint);font-size:18px}
+.row{display:flex;align-items:center;justify-content:space-between;padding:9px 2px;border-bottom:1px solid var(--border);gap:8px}
+.row:last-child{border-bottom:none}
+.row-l{display:flex;align-items:center;gap:8px;min-width:0;font-size:13.5px}
+.st{font-size:11px;padding:4px 10px;border-radius:100px;cursor:pointer;font-weight:600}
+.st.working{background:var(--green-dim);color:var(--green)}
+.st.off{background:var(--surface);color:var(--text-faint);border:1px solid var(--border-2)}
+.hin{width:66px;flex:0 0 auto;background:var(--surface);border:1px solid var(--border-2);border-radius:8px;padding:7px 6px;color:var(--text);font-family:var(--mono);font-size:13px;text-align:right;outline:none}
+.hin.logged{border-color:var(--gold);color:var(--gold)}
+.quick-add{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px;margin-top:12px}
+.banner{display:flex;align-items:flex-start;justify-content:space-between;background:var(--surface-2);border:1px solid var(--gold-dim);border-radius:10px;padding:12px 14px;margin-top:16px;font-size:12.5px;color:var(--gold);gap:10px}
+.banner .x{cursor:pointer;color:var(--text-dim);font-size:16px}
+.status-row{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--text-dim);margin-bottom:12px}
+.pnav{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.plabel{font-size:15px;font-weight:700;text-align:center;flex:1}
+.psub{font-size:11.5px;color:var(--text-faint);text-align:center;margin-top:2px}
+.big{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:16px}
+.stat{background:var(--surface-2);border:1px solid var(--border);border-radius:10px;padding:12px}
+.stat .k{font-size:11px;color:var(--text-faint)}
+.stat .v{font-family:var(--mono);font-size:20px;font-weight:700;margin-top:4px}
+.stat .v.g{color:var(--green)}.stat .s{font-size:11px;color:var(--text-dim);margin-top:2px;font-family:var(--mono)}
+.tot{display:flex;justify-content:space-between;font-family:var(--mono);font-size:13px;padding:8px 2px;color:var(--text-dim)}
+.tot b{color:var(--text)}
 </style>
 </head>
 <body>
-
-<div class="sync-bar" id="sync-bar">⏳ Connecting to sync...</div>
-
-<nav class="nav">
-  <div class="nav-logo">
-    <div class="dot p1"></div><div class="dot p2"></div>
-    <span>splitwise ✦</span>
-  </div>
-  <div class="nav-tabs">
-    <button class="nav-tab active" onclick="showPage('dashboard')">Dashboard</button>
-    <button class="nav-tab" onclick="showPage('add')">Add</button>
-    <button class="nav-tab" onclick="showPage('history')">History</button>
-    <button class="nav-tab" onclick="showPage('split')">Split</button>
-  </div>
-  <div class="who-badge">
-    <button class="who-btn p1 active" id="whoP1" onclick="setWho('p1')">Hiraj</button>
-    <button class="who-btn p2" id="whoP2" onclick="setWho('p2')">Ress</button>
-  </div>
-</nav>
-
-<div class="page active" id="page-dashboard">
-  <div id="owed-banner"></div>
-  <div class="summary-grid" id="summary-grid"></div>
-  <div class="card"><div class="card-title">This month's expenses</div><div id="recent-list"></div></div>
-  <div class="card"><div class="card-title">Spending by category</div><div id="cat-breakdown"></div></div>
+<div class="topbar"><div class="brand">Roster</div><div class="topbar-right"><div class="clock-txt" id="clockTxt"></div><div class="sync-dot" id="syncDot"></div></div></div>
+<div class="wrap">
+<div class="tabs">
+  <div class="tab active" data-a="tab" data-p="calPanel">Calendar</div>
+  <div class="tab" data-a="tab" data-p="payPanel">Pay</div>
+  <div class="tab" data-a="tab" data-p="jobsPanel">Jobs &amp; Pattern</div>
+  <div class="tab" data-a="tab" data-p="syncPanel">Sync</div>
 </div>
 
-<div class="page" id="page-add">
+<div class="panel visible" id="calPanel">
+  <div id="upcomingBanner"></div>
   <div class="card">
-    <div class="card-title">Add new expense</div>
-    <div class="add-form">
-      <div class="field full">
-        <label>Who's paying?</label>
-        <div class="who-select">
-          <div class="who-opt p1 sel" id="form-p1" onclick="selectPayer('p1')">Hiraj</div>
-          <div class="who-opt p2" id="form-p2" onclick="selectPayer('p2')">Ress</div>
-        </div>
-      </div>
-      <div class="field full"><label>Description</label><input type="text" id="f-desc" placeholder="e.g. Sobeys groceries"></div>
-      <div class="field"><label>Amount ($)</label><input type="number" id="f-amount" placeholder="0.00" min="0" step="0.01"></div>
-      <div class="field"><label>Category</label>
-        <select id="f-cat">
-          <option value="🏠 Rent">🏠 Rent</option>
-          <option value="🛒 Groceries" selected>🛒 Groceries</option>
-          <option value="🐾 Pet">🐾 Pet</option>
-          <option value="🚗 Car">🚗 Car</option>
-          <option value="💡 Utilities">💡 Utilities</option>
-          <option value="🍕 Dining out">🍕 Dining out</option>
-          <option value="🏥 Health">🏥 Health</option>
-          <option value="🎉 Entertainment">🎉 Entertainment</option>
-          <option value="👕 Shopping">👕 Shopping</option>
-          <option value="✈️ Travel">✈️ Travel</option>
-          <option value="📱 Phone/Internet">📱 Phone/Internet</option>
-          <option value="💰 Other">💰 Other</option>
-        </select>
-      </div>
-      <div class="field"><label>Date</label><input type="date" id="f-date"></div>
-      <div class="field"><label>Split</label>
-        <select id="f-split">
-          <option value="50/50">50/50 — equal split</option>
-          <option value="Hiraj pays all">Hiraj pays all</option>
-          <option value="Ress pays all">Ress pays all</option>
-        </select>
-      </div>
-      <div class="field full"><label>Note (optional)</label><textarea id="f-note" placeholder="Any extra details..."></textarea></div>
-      <div class="full"><button class="add-btn" onclick="addExpense()">+ Add Expense</button></div>
-    </div>
+    <div class="card-title"><span id="calMonthLabel"></span>
+      <span style="display:flex;align-items:center;gap:10px"><span class="icon-btn" data-a="prev">‹</span><span class="icon-btn" data-a="today" style="font-size:11px">•</span><span class="icon-btn" data-a="next">›</span></span></div>
+    <div class="cal-head" id="calHead"></div><div class="cal-grid" id="calGrid"></div>
+  </div>
+  <div id="selectedDayDetail"></div>
+</div>
+
+<div class="panel" id="payPanel">
+  <div class="card">
+    <div id="pJobSel" style="margin-bottom:14px"></div>
+    <div class="pnav"><span class="icon-btn" data-a="pprev">‹</span><div style="flex:1"><div class="plabel" id="pLabel"></div><div class="psub" id="pSub"></div></div><span class="icon-btn" data-a="pnext">›</span></div>
+    <div id="pSummary"></div>
+  </div>
+  <div class="card"><div class="card-title">Hours this period</div><div id="pRows"></div>
+    <div class="hint">Hours default to each job's normal shift length. Change a number to log what you actually worked (it turns gold). Clear the box to go back to the default.</div></div>
+  <div class="card"><div class="card-title">Pay settings</div><div id="pSettings"></div></div>
+</div>
+
+<div class="panel" id="jobsPanel">
+  <div class="card">
+    <div class="card-title">Your jobs &amp; rotation</div>
+    <div class="hint" style="margin-top:0">Set each job's rotation weeks, hourly rate, and normal shift length. Tap a day to toggle it for that week.</div>
+    <div id="jobsList"></div>
+    <button class="add-btn secondary" data-a="addJob" style="margin-top:16px">+ Add a job</button>
   </div>
 </div>
 
-<div class="page" id="page-history">
-  <div class="month-tabs" id="month-tabs"></div>
-  <div class="card"><div class="card-title">All expenses</div><div id="history-list"></div></div>
+<div class="panel" id="syncPanel">
+  <div class="card">
+    <div class="card-title">Cloud sync</div>
+    <div class="status-row"><div class="sync-dot" id="syncDot2"></div><span id="syncStatusText">Not connected</span></div>
+    <div class="field-row"><input type="text" class="text-input" id="syncUrlInput" placeholder="Apps Script web app URL"></div>
+    <button class="add-btn" data-a="connect">Connect</button>
+    <button class="add-btn secondary" data-a="syncNow" style="margin-top:8px">Sync now</button>
+    <button class="add-btn secondary" id="copyLinkBtn" data-a="copy" style="margin-top:8px;display:none">Copy link for another device</button>
+    <div class="hint" id="lastSyncHint"></div>
+  </div>
+  <div class="card">
+    <div class="card-title">Full backup</div>
+    <button class="add-btn secondary" data-a="export">Download full backup</button>
+    <div class="field-row" style="margin-top:10px"><input type="file" accept="application/json" class="text-input" id="restoreFileInput" style="padding:9px 10px"></div>
+    <button class="add-btn secondary" data-a="restore">Restore from backup file</button>
+    <div class="hint" id="restoreStatus"></div>
+  </div>
+</div>
 </div>
 
-<div class="page" id="page-split">
-  <div class="card"><div class="card-title">Monthly breakdown — Hiraj vs Ress</div><div id="split-content"></div></div>
-  <div class="card"><div class="card-title">Settlement history</div><div id="settlement-list"></div></div>
-</div>
+<script>
+(()=>{
+const $=id=>document.getElementById(id);
+const WD=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+const MN=['January','February','March','April','May','June','July','August','September','October','November','December'];
+const PAL=[{fg:'#3FBF74',bg:'#1E4A32'},{fg:'#5B9FE8',bg:'#1E3A5C'},{fg:'#E8A33D',bg:'#4A360F'},{fg:'#C77DE0',bg:'#3B1F47'},{fg:'#F0625F',bg:'#4A2320'},{fg:'#4DD4C4',bg:'#0F3D38'}];
+const pad=n=>String(n).padStart(2,'0');
+const fmt=d=>`${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`; // local date (not UTC)
+const P=s=>new Date(s+'T00:00:00');
+const addD=(d,n)=>{const r=new Date(d);r.setDate(r.getDate()+n);return r};
+const sow=d=>{const r=new Date(d);r.setHours(0,0,0,0);r.setDate(r.getDate()-r.getDay());return r};
+const uid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,7);
+const esc=s=>{const d=document.createElement('div');d.textContent=s;return d.innerHTML};
+const money=n=>'$'+n.toLocaleString('en-CA',{minimumFractionDigits:2,maximumFractionDigits:2});
+const nh=n=>(Math.round(n*100)/100).toString();
+const ls=(k,d)=>{try{const v=JSON.parse(localStorage.getItem(k));return v==null?d:v}catch(e){return d}};
+const short=d=>d.toLocaleDateString('en-US',{month:'short',day:'numeric'});
+const col=j=>PAL[j.colorIdx%PAL.length];
+const blank=()=>[0,0,0,0,0,0,0].map(()=>false);
 
+let jobs=[],delJ=[],ov=[],delO=[],H={},S={type:'biweekly',start:'',tax:0,otMult:1.5,mod:0};
+let syncUrl='',timer=null,pushT=null,sel=null,pOff=0,pJob=null;
+const n0=new Date();let cal={y:n0.getFullYear(),m:n0.getMonth()};
 
-<!-- Mobile bottom navigation -->
-<nav class="mobile-bottom-nav" id="mobile-bottom-nav">
-  <button class="mobile-nav-btn active" onclick="showPage('dashboard')">
-    <span class="nav-icon">🏠</span>
-    <span>Home</span>
-  </button>
-
-  <button class="mobile-nav-btn add-mobile" onclick="showPage('add')">
-    <span class="nav-icon">+</span>
-    <span>Add</span>
-  </button>
-
-  <button class="mobile-nav-btn" onclick="showPage('history')">
-    <span class="nav-icon">📋</span>
-    <span>History</span>
-  </button>
-
-  <button class="mobile-nav-btn" onclick="showPage('split')">
-    <span class="nav-icon">⚖️</span>
-    <span>Split</span>
-  </button>
-</nav>
-
-<div class="toast" id="toast"></div>
-
-<!-- Firebase -->
-<script type="module">
-import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
-import { getFirestore, collection, addDoc, onSnapshot, deleteDoc, doc, query, orderBy } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
-
-const firebaseConfig = {
-  apiKey: "AIzaSyBCAxv-u1rlQLonW0HLSahbmJLXtuVfbEA",
-  authDomain: "budget-1385f.firebaseapp.com",
-  projectId: "budget-1385f",
-  storageBucket: "budget-1385f.firebasestorage.app",
-  messagingSenderId: "554876329471",
-  appId: "1:554876329471:web:53f3fb8bbb95f060ac1bca"
-};
-
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-
-let expenses = [];
-let settlements = [];
-let currentWho = 'p1';
-let formPayer = 'p1';
-let activeMonth = null;
-
-// ── Sync status ───────────────────────────────────────────────────────────────
-function setSyncBar(state) {
-  const bar = document.getElementById('sync-bar');
-  if (state === 'live') { bar.className = 'sync-bar live'; bar.textContent = '🟢 Live sync — both phones connected'; }
-  else if (state === 'err') { bar.className = 'sync-bar err'; bar.textContent = '🔴 Sync error — check connection'; }
-  else { bar.className = 'sync-bar'; bar.textContent = '⏳ Connecting...'; }
-}
-
-// ── Real-time listeners ───────────────────────────────────────────────────────
-const expQ = query(collection(db, 'expenses'), orderBy('createdAt', 'desc'));
-onSnapshot(expQ, snap => {
-  expenses = snap.docs.map(d => ({ id: d.id, ...d.data() }));
-  setSyncBar('live');
-  renderAll();
-}, () => setSyncBar('err'));
-
-const setQ = query(collection(db, 'settlements'), orderBy('createdAt', 'desc'));
-onSnapshot(setQ, snap => {
-  settlements = snap.docs.map(d => ({ id: d.id, ...d.data() }));
-  renderAll();
-});
-
-// ── Add expense ───────────────────────────────────────────────────────────────
-window.addExpense = async () => {
-  const desc = document.getElementById('f-desc').value.trim();
-  const amount = parseFloat(document.getElementById('f-amount').value);
-  const cat = document.getElementById('f-cat').value;
-  const date = document.getElementById('f-date').value || new Date().toISOString().split('T')[0];
-  const split = document.getElementById('f-split').value;
-  const note = document.getElementById('f-note').value.trim();
-  if (!desc) { showToast('Add a description'); return; }
-  if (!amount || amount <= 0) { showToast('Enter a valid amount'); return; }
-  await addDoc(collection(db, 'expenses'), { payer: formPayer, desc, amount, cat, date, split, note, createdAt: Date.now() });
-  document.getElementById('f-desc').value = '';
-  document.getElementById('f-amount').value = '';
-  document.getElementById('f-note').value = '';
-  showToast('✓ Expense added — syncing to both phones');
-  showPage('dashboard');
-};
-
-// ── Delete expense ────────────────────────────────────────────────────────────
-window.delExp = async (id) => {
-  await deleteDoc(doc(db, 'expenses', id));
-  showToast('Expense removed');
-};
-
-// ── Settle ────────────────────────────────────────────────────────────────────
-window.settle = async (amount, payer) => {
-  await addDoc(collection(db, 'settlements'), { payer, amount, createdAt: Date.now(), date: new Date().toLocaleDateString('en-CA', {month:'short',day:'numeric',year:'numeric'}) });
-  showToast('✓ Settled ' + fmt(amount));
-};
-
-// ── Helpers ───────────────────────────────────────────────────────────────────
-function fmt(n) { return '$' + Math.abs(n).toLocaleString('en-CA', {minimumFractionDigits:2,maximumFractionDigits:2}); }
-function getMonthKey(dateStr) { const d = new Date(dateStr); return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}`; }
-function getMonthLabel(key) { const [y,m] = key.split('-'); return new Date(y,m-1,1).toLocaleDateString('en-CA',{month:'long',year:'numeric'}); }
-function getMonths() {
-  const months = [...new Set(expenses.map(e => getMonthKey(e.date)))].sort().reverse();
-  if (!months.length) { const n = new Date(); months.push(`${n.getFullYear()}-${String(n.getMonth()+1).padStart(2,'0')}`); }
-  return months;
-}
-function thisMonthExps() { const key = activeMonth || getMonths()[0]; return expenses.filter(e => getMonthKey(e.date) === key); }
-function calcOwed(exps) {
-  let p1Total=0,p2Total=0,p1Share=0,p2Share=0;
-  exps.forEach(e => {
-    const a = e.amount;
-    if (e.payer==='p1') p1Total+=a; else p2Total+=a;
-    if (e.split==='50/50'){p1Share+=a/2;p2Share+=a/2;}
-    else if (e.split==='Hiraj pays all'){p1Share+=a;}
-    else if (e.split==='Ress pays all'){p2Share+=a;}
-    else {p1Share+=a/2;p2Share+=a/2;}
-  });
-  return {p1Total,p2Total,combined:p1Total+p2Total,p1Net:p1Total-p1Share,p2Net:p2Total-p2Share};
-}
-
-// ── Render ────────────────────────────────────────────────────────────────────
-function renderAll() {
-  const months = getMonths();
-  if (!activeMonth || !months.includes(activeMonth)) activeMonth = months[0];
-  renderDashboard(); renderMonthTabs(months); renderHistory(); renderSplit();
-}
-
-function renderDashboard() {
-  const exps = thisMonthExps();
-  const {p1Total,p2Total,combined,p1Net,p2Net} = calcOwed(exps);
-  const owed = document.getElementById('owed-banner');
-  if (Math.abs(p1Net) < 0.01) {
-    owed.className='owed-banner balanced';
-    owed.innerHTML=`<div><div class="owed-text">✓ All settled up!</div><div style="font-size:13px;color:var(--sub);margin-top:4px">Perfectly balanced this month</div></div><div class="owed-amount" style="color:var(--green)">${fmt(0)}</div>`;
-  } else if (p1Net < 0) {
-    owed.className='owed-banner p1owes';
-    owed.innerHTML=`<div><div class="owed-text" style="color:var(--p1)">Hiraj owes Ress</div><div style="font-size:13px;color:var(--sub);margin-top:4px">Based on this month</div></div><div style="display:flex;align-items:center;gap:12px"><div class="owed-amount" style="color:var(--p1)">${fmt(Math.abs(p1Net))}</div><button class="settle-btn" onclick="settle(${Math.abs(p1Net).toFixed(2)},'p1')">Settle</button></div>`;
-  } else {
-    owed.className='owed-banner p2owes';
-    owed.innerHTML=`<div><div class="owed-text" style="color:var(--p2)">Ress owes Hiraj</div><div style="font-size:13px;color:var(--sub);margin-top:4px">Based on this month</div></div><div style="display:flex;align-items:center;gap:12px"><div class="owed-amount" style="color:var(--p2)">${fmt(Math.abs(p2Net))}</div><button class="settle-btn" onclick="settle(${Math.abs(p2Net).toFixed(2)},'p2')">Settle</button></div>`;
+function load(){
+  jobs=ls('roster_jobs',[]);delJ=ls('roster_deleted_jobs',[]);ov=ls('roster_overrides',[]);delO=ls('roster_deleted_overrides',[]);
+  H=ls('roster_hours',{});Object.assign(S,ls('roster_settings',{}));syncUrl=localStorage.getItem('roster_sync_url')||'';
+  const sun=fmt(sow(new Date()));
+  if(!jobs.length){
+    jobs=[{id:uid(),name:'Craigwiel Gardens',colorIdx:0,weeks:[[1,0,0,1,1,0,0].map(Boolean),[0,1,1,0,0,1,1].map(Boolean)],anchor:sun},
+          {id:uid(),name:'Other Job',colorIdx:1,weeks:[[1,0,1,0,1,0,1].map(Boolean),[0,0,0,0,1,0,0].map(Boolean),[1,0,1,0,0,0,1].map(Boolean),[0,0,1,0,0,1,0].map(Boolean)],anchor:sun}];
   }
-  document.getElementById('summary-grid').innerHTML=`
-    <div class="metric"><div class="label">Combined</div><div class="val">${fmt(combined)}</div><div class="sub">This month</div></div>
-    <div class="metric"><div class="label">Hiraj paid</div><div class="val p1">${fmt(p1Total)}</div><div class="sub">${exps.filter(e=>e.payer==='p1').length} expenses</div></div>
-    <div class="metric"><div class="label">Ress paid</div><div class="val p2">${fmt(p2Total)}</div><div class="sub">${exps.filter(e=>e.payer==='p2').length} expenses</div></div>
-    <div class="metric"><div class="label">Each should pay</div><div class="val">${fmt(combined/2)}</div><div class="sub">50/50 target</div></div>`;
-  document.getElementById('recent-list').innerHTML = exps.length ? `<div class="exp-list">${exps.slice(0,8).map(expHTML).join('')}</div>` : emptyHTML();
-  const cats={};
-  exps.forEach(e=>{cats[e.cat]=(cats[e.cat]||0)+e.amount;});
-  const sorted=Object.entries(cats).sort((a,b)=>b[1]-a[1]);
-  const max=sorted[0]?.[1]||1;
-  document.getElementById('cat-breakdown').innerHTML = sorted.length ? sorted.map(([cat,amt])=>`
-    <div class="cat-row"><div class="cat-icon">${cat.split(' ')[0]}</div>
-    <div class="cat-info"><div class="cat-label">${cat.split(' ').slice(1).join(' ')}</div>
-    <div class="cat-bar-wrap"><div class="cat-bar" style="width:${(amt/max*100).toFixed(0)}%"></div></div></div>
-    <div class="cat-amount">${fmt(amt)}</div></div>`).join('') : '<div style="color:var(--sub);font-size:13px">No data yet</div>';
-}
-
-function expHTML(e) {
-  const d = new Date(e.date+'T12:00:00');
-  const ds = d.toLocaleDateString('en-CA',{month:'short',day:'numeric'});
-  return `<div class="exp-item">
-    <div class="exp-avatar ${e.payer}">${e.payer==='p1'?'H':'R'}</div>
-    <div style="font-size:18px">${e.cat.split(' ')[0]}</div>
-    <div class="exp-info"><div class="exp-desc">${e.desc}</div><div class="exp-meta">${ds} · ${e.cat.split(' ').slice(1).join(' ')} · ${e.split}</div></div>
-    <div class="exp-amount">${fmt(e.amount)}</div>
-    <button class="exp-del" onclick="delExp('${e.id}')">×</button></div>`;
-}
-
-function emptyHTML() { return `<div class="empty-state"><div style="font-size:36px;margin-bottom:10px">💸</div><p style="font-weight:600;margin-bottom:4px">No expenses yet</p><p style="font-size:14px">Add your first using the Add tab</p></div>`; }
-
-function renderMonthTabs(months) {
-  document.getElementById('month-tabs').innerHTML = months.map(m=>`<div class="month-tab ${m===activeMonth?'active':''}" onclick="setMonth('${m}')">${getMonthLabel(m)}</div>`).join('');
-}
-
-function renderHistory() {
-  const exps = thisMonthExps();
-  document.getElementById('history-list').innerHTML = exps.length ? `<div class="exp-list">${exps.map(expHTML).join('')}</div>` : emptyHTML();
-}
-
-function renderSplit() {
-  const months = getMonths();
-  let html='<table class="split-table"><thead><tr><th>Month</th><th>Hiraj paid</th><th>Ress paid</th><th>Combined</th><th>Balance</th></tr></thead><tbody>';
-  months.forEach(m=>{
-    const exps=expenses.filter(e=>getMonthKey(e.date)===m);
-    const {p1Total,p2Total,combined,p1Net}=calcOwed(exps);
-    const bal=p1Net>=0?`<span class="pill p2">Ress owes ${fmt(p1Net)}</span>`:`<span class="pill p1">Hiraj owes ${fmt(Math.abs(p1Net))}</span>`;
-    html+=`<tr><td style="font-weight:500">${getMonthLabel(m)}</td><td>${fmt(p1Total)}</td><td>${fmt(p2Total)}</td><td>${fmt(combined)}</td><td>${bal}</td></tr>`;
+  jobs.forEach(j=>{ // migrate old formats + new pay fields
+    if(!j.weeks&&j.weekA){j.weeks=[j.weekA,j.weekB];delete j.weekA;delete j.weekB}
+    norm(j);
   });
-  html+='</tbody></table>';
-  document.getElementById('split-content').innerHTML=html;
-  document.getElementById('settlement-list').innerHTML = settlements.length
-    ? `<div class="exp-list">${settlements.slice(0,10).map(s=>`<div class="exp-item"><div class="exp-avatar ${s.payer}">${s.payer==='p1'?'H':'R'}</div><div class="exp-info"><div class="exp-desc">Settlement payment</div><div class="exp-meta">${s.date}</div></div><div class="exp-amount" style="color:var(--green)">${fmt(s.amount)}</div><span class="pill green">Settled</span></div>`).join('')}</div>`
-    : `<div style="color:var(--sub);font-size:13px;padding:12px 0">No settlements yet</div>`;
+  if(!S.start)S.start=sun;
+  save(true);
+}
+function save(local){
+  localStorage.setItem('roster_jobs',JSON.stringify(jobs));localStorage.setItem('roster_deleted_jobs',JSON.stringify(delJ));
+  localStorage.setItem('roster_overrides',JSON.stringify(ov));localStorage.setItem('roster_deleted_overrides',JSON.stringify(delO));
+  localStorage.setItem('roster_hours',JSON.stringify(H));localStorage.setItem('roster_settings',JSON.stringify(S));
+  if(!local&&syncUrl){clearTimeout(pushT);pushT=setTimeout(()=>push(true),800)}
+}
+const norm=j=>{j.rate=+j.rate||0;j.hrs=j.hrs==null?8:+j.hrs;j.ot=+j.ot||0;j.ptype=j.ptype||S.type||'biweekly';j.pstart=j.pstart||S.start||fmt(sow(new Date()))};
+const touch=o=>{o.mod=Date.now();return o};
+
+/* ---------- sync (newest edit wins per item) ---------- */
+function setSync(state,text){[$('syncDot'),$('syncDot2')].forEach(d=>d.className='sync-dot'+(state?' '+state:''));if(text)$('syncStatusText').textContent=text}
+function mergeList(local,remote,del){const m={};local.forEach(x=>m[x.id]=x);remote.forEach(x=>{const c=m[x.id];if(!c||(x.mod||0)>(c.mod||0))m[x.id]=x});return Object.values(m).filter(x=>!del.includes(x.id))}
+function merge(r){
+  if(!r||typeof r!=='object')return;
+  const arr=v=>Array.isArray(v)?v:[];
+  delJ=[...new Set([...delJ,...arr(r.deletedJobIds)])];delO=[...new Set([...delO,...arr(r.deletedOverrideIds)])];
+  jobs=mergeList(jobs,arr(r.jobs),delJ);ov=mergeList(ov,arr(r.overrides),delO);
+  if(r.hours&&typeof r.hours==='object')Object.entries(r.hours).forEach(([k,v])=>{if(!H[k]||(v.mod||0)>(H[k].mod||0))H[k]=v});
+  if(r.settings&&(r.settings.mod||0)>(S.mod||0))S=Object.assign(S,r.settings);
+  jobs.forEach(norm);
+  save(true);
+}
+const payload=()=>({jobs,deletedJobIds:delJ,overrides:ov,deletedOverrideIds:delO,hours:H,settings:S,updatedAt:new Date().toISOString()});
+const stamp=()=>{$('lastSyncHint').textContent='Last synced '+new Date().toLocaleTimeString('en-US')};
+async function pull(){
+  if(!syncUrl)return;setSync('busy','Syncing…');
+  try{const r=await fetch(syncUrl+(syncUrl.includes('?')?'&':'?')+'_='+Date.now());merge(await r.json());await push(true);setSync('ok','Synced');stamp();renderAll()}
+  catch(e){setSync('err','Sync failed — check the URL or your connection')}
+}
+async function push(silent){
+  if(!syncUrl)return;if(!silent)setSync('busy','Syncing…');
+  try{await fetch(syncUrl,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(payload())});if(!silent){setSync('ok','Synced');stamp()}}
+  catch(e){if(!silent)setSync('err','Sync failed — check the URL or your connection')}
+}
+function autoSync(){clearInterval(timer);if(syncUrl)timer=setInterval(pull,20000)}
+
+/* ---------- schedule ---------- */
+function isSch(j,ds){
+  const diff=Math.round((sow(P(ds))-sow(P(j.anchor)))/(7*864e5));const n=j.weeks.length;
+  return !!j.weeks[((diff%n)+n)%n][P(ds).getDay()];
+}
+function shifts(ds){
+  const r=[];
+  jobs.forEach(j=>{
+    const rm=ov.some(o=>o.jobId===j.id&&o.date===ds&&o.type==='remove');
+    if(isSch(j,ds)&&!rm)r.push({job:j,kind:'regular'});
+    ov.forEach(o=>{if(o.jobId===j.id&&o.date===ds&&o.type==='add')r.push({job:j,kind:'extra',note:o.note})});
+  });
+  return r;
+}
+const logged=(j,ds)=>{const h=H[j.id+'|'+ds];return !!h&&h.hours!=null};
+const hrs=(j,ds)=>logged(j,ds)?H[j.id+'|'+ds].hours:shifts(ds).filter(s=>s.job.id===j.id).length*j.hrs;
+function setHours(jid,ds,v){
+  const k=jid+'|'+ds,x=parseFloat(v);
+  H[k]=touch({id:k,jobId:jid,date:ds,hours:(v===''||isNaN(x)||x<0)?null:x});
 }
 
-// ── UI helpers ────────────────────────────────────────────────────────────────
-window.showPage = (name) => {
-  // Switch pages
-  document.querySelectorAll('.page').forEach(p => {
-    p.classList.remove('active');
-  });
-
-  const page = document.getElementById('page-' + name);
-  if (page) page.classList.add('active');
-
-  // Desktop navigation
-  document.querySelectorAll('.nav-tab').forEach(t => {
-    t.classList.remove('active');
-  });
-
-  const tabs = document.querySelectorAll('.nav-tab');
-  ['dashboard', 'add', 'history', 'split'].forEach((n, i) => {
-    if (n === name && tabs[i]) {
-      tabs[i].classList.add('active');
+/* ---------- pay ---------- */
+function period(off,j){
+  const t=new Date();t.setHours(0,0,0,0);let s,e;
+  if(j.ptype==='weekly'||j.ptype==='biweekly'){
+    const L=j.ptype==='weekly'?7:14,i=Math.floor(Math.round((t-P(j.pstart))/864e5)/L)+off;
+    s=addD(P(j.pstart),i*L);e=addD(s,L-1);
+  }else if(j.ptype==='semi'){
+    const k=t.getFullYear()*24+t.getMonth()*2+(t.getDate()>15?1:0)+off,y=Math.floor(k/24),m=Math.floor(k%24/2);
+    s=new Date(y,m,k%2?16:1);e=k%2?new Date(y,m+1,0):new Date(y,m,15);
+  }else{
+    const k=t.getFullYear()*12+t.getMonth()+off;s=new Date(Math.floor(k/12),k%12,1);e=new Date(Math.floor(k/12),k%12+1,0);
+  }
+  return{s,e};
+}
+function calc(list,s,e,upto){ // overtime is weekly (Sun–Sat) per job
+  return list.map(j=>{
+    const wk={};let days=0;
+    for(let d=new Date(s);d<=e;d=addD(d,1)){
+      const ds=fmt(d);if(upto&&ds>upto)break;
+      const h=hrs(j,ds);if(h>0){days++;const k=fmt(sow(d));wk[k]=(wk[k]||0)+h}
     }
+    let tot=0,ot=0;Object.values(wk).forEach(w=>{tot+=w;if(j.ot>0&&w>j.ot)ot+=w-j.ot});
+    return{job:j,days,hours:tot,ot,pay:(tot-ot)*j.rate+ot*j.rate*S.otMult};
   });
+}
+const sum=(a,k)=>a.reduce((t,x)=>t+x[k],0);
 
-  // Mobile bottom navigation
-  document.querySelectorAll('.mobile-nav-btn').forEach(btn => {
-    btn.classList.remove('active');
-  });
-
-  const mobileButtons = document.querySelectorAll('.mobile-nav-btn');
-  const mobileIndex = {
-    dashboard: 0,
-    add: 1,
-    history: 2,
-    split: 3
-  };
-
-  if (mobileButtons[mobileIndex[name]]) {
-    mobileButtons[mobileIndex[name]].classList.add('active');
+function renderPay(){
+  if(!jobs.length){$('pJobSel').innerHTML='';$('pLabel').textContent='';$('pSub').textContent='';$('pSummary').innerHTML='<div class="hint">Add a job first.</div>';$('pRows').innerHTML='';$('pSettings').innerHTML='';return}
+  const j=jobOf(pJob)||jobs[0];pJob=j.id;
+  $('pJobSel').innerHTML=`<select data-f="pjob" style="width:100%">${jobs.map(x=>`<option value="${x.id}" ${x.id===j.id?'selected':''}>${esc(x.name)}</option>`).join('')}</select>`;
+  const{s,e}=period(pOff,j),td=fmt(new Date()),ef=fmt(e);
+  const[f]=calc([j],s,e),[d]=calc([j],s,e,td<ef?td:null),tax=(+S.tax||0)/100,c=col(j);
+  $('pLabel').textContent=`${short(s)} – ${short(e)}, ${e.getFullYear()}`;
+  $('pSub').textContent=td>=fmt(s)&&td<=ef?'Current pay period':(td>ef?'Past pay period':'Upcoming pay period');
+  $('pSummary').innerHTML=`
+    <div class="big">
+      <div class="stat"><div class="k">Earned so far</div><div class="v g">${money(d.pay)}</div><div class="s">${nh(d.hours)} hrs</div></div>
+      <div class="stat"><div class="k">Full period</div><div class="v">${money(f.pay)}</div><div class="s">${nh(f.hours)} hrs</div></div>
+    </div>
+    <div class="tot"><span>${nh(f.hours)} hrs${f.ot>0?` (${nh(f.ot)} OT)`:''} × ${money(j.rate)}/hr</span><b>${money(f.pay)}</b></div>
+    ${tax>0?`<div class="tot"><span>Est. take-home (−${S.tax}% tax)</span><b>${money(f.pay*(1-tax))}</b></div>`:''}`;
+  let rows='';
+  for(let x=new Date(s);x<=e;x=addD(x,1)){
+    const ds=fmt(x),h=hrs(j,ds);if(!(h>0||logged(j,ds)))continue;
+    rows+=`<div class="row"><div class="row-l"><span class="job-color-dot" style="background:${c.fg}"></span>${x.toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'})}</div>
+      <input type="number" inputmode="decimal" step="0.25" min="0" class="hin ${logged(j,ds)?'logged':''}" data-f="hin" data-j="${j.id}" data-d="${ds}" value="${nh(h)}"></div>`;
   }
-
-  renderAll();
-
-  // Scroll to top when changing pages
-  window.scrollTo({
-    top: 0,
-    behavior: 'smooth'
-  });
-};
-
-window.setWho = (who) => {
-  currentWho=who;
-  document.getElementById('whoP1').classList.toggle('active',who==='p1');
-  document.getElementById('whoP2').classList.toggle('active',who==='p2');
-};
-
-window.selectPayer = (who) => {
-  formPayer=who;
-  document.getElementById('form-p1').classList.toggle('sel',who==='p1');
-  document.getElementById('form-p2').classList.toggle('sel',who==='p2');
-};
-
-window.setMonth = (key) => { activeMonth=key; renderAll(); };
-
-function showToast(msg) {
-  const t=document.getElementById('toast');
-  t.textContent=msg; t.classList.add('show');
-  setTimeout(()=>t.classList.remove('show'),2500);
+  $('pRows').innerHTML=rows||'<div class="hint" style="margin-top:0">No shifts in this period.</div>';
+  const o=(v,l)=>`<option value="${v}" ${j.ptype===v?'selected':''}>${l}</option>`,wk=j.ptype==='weekly'||j.ptype==='biweekly';
+  $('pSettings').innerHTML=`
+    <div class="hint" style="margin:0 0 10px">Pay period for <b style="color:var(--text)">${esc(j.name)}</b> — each job has its own.</div>
+    <div class="field-row"><div style="flex:1"><span class="lbl">Pay frequency</span><select data-f="job" data-k="ptype" data-id="${j.id}" style="width:100%">${o('weekly','Weekly')}${o('biweekly','Every 2 weeks')}${o('semi','Twice a month (1st & 16th)')}${o('monthly','Monthly')}</select></div></div>
+    ${wk?`<div class="field-row"><div style="flex:1"><span class="lbl">A pay period started on</span><input type="date" class="text-input" style="width:100%" data-f="job" data-k="pstart" data-id="${j.id}" value="${j.pstart}"></div></div>`:''}
+    <div class="trio" style="grid-template-columns:1fr 1fr"><div><span class="lbl">Tax withheld % (all jobs)</span><input type="number" inputmode="decimal" min="0" max="100" class="text-input" style="width:100%" data-f="set" data-k="tax" value="${S.tax||0}"></div>
+    <div><span class="lbl">Overtime multiplier</span><input type="number" inputmode="decimal" step="0.05" min="1" class="text-input" style="width:100%" data-f="set" data-k="otMult" value="${S.otMult}"></div></div>
+    <div class="hint">Overtime applies per Sun–Sat week once you set "OT after" hours on the job (0 = none).</div>`;
 }
 
-document.getElementById('f-date').value = new Date().toISOString().split('T')[0];
+/* ---------- jobs ---------- */
+function renderJobs(){
+  const el=$('jobsList');
+  if(!jobs.length){el.innerHTML='<div class="hint">No jobs yet — add one below.</div>';return}
+  el.innerHTML=jobs.map(j=>{const c=col(j);return `
+    <div class="job-card" style="--jc:${c.fg};--jc-dim:${c.bg}">
+      <div class="job-card-head"><div class="job-title-row"><span class="job-color-dot" style="background:${c.fg}"></span>
+        <input type="text" class="job-name-input" value="${esc(j.name)}" data-f="job" data-k="name" data-id="${j.id}"></div>
+        <span class="job-del" data-a="delJob" data-id="${j.id}">×</span></div>
+      <div class="trio">
+        <div><span class="lbl">Hourly rate $</span><input type="number" inputmode="decimal" step="0.01" min="0" class="text-input" style="width:100%" data-f="job" data-k="rate" data-id="${j.id}" value="${j.rate}"></div>
+        <div><span class="lbl">Shift hours</span><input type="number" inputmode="decimal" step="0.25" min="0" class="text-input" style="width:100%" data-f="job" data-k="hrs" data-id="${j.id}" value="${j.hrs}"></div>
+        <div><span class="lbl">OT after hrs/wk</span><input type="number" inputmode="decimal" min="0" class="text-input" style="width:100%" data-f="job" data-k="ot" data-id="${j.id}" value="${j.ot}"></div>
+      </div>
+      ${j.weeks.map((w,wi)=>`<div class="week-label"><span>Week ${wi+1}</span>${j.weeks.length>1?`<span data-a="delWeek" data-id="${j.id}" data-w="${wi}">remove week</span>`:''}</div>
+        <div class="dow-row">${WD.map((d,i)=>`<div class="dow-cell ${w[i]?'on':''}" data-a="dow" data-id="${j.id}" data-w="${wi}" data-day="${i}"><span class="d">${d}</span></div>`).join('')}</div>`).join('')}
+      <button class="add-btn secondary" data-a="addWeek" data-id="${j.id}" style="margin-top:12px;padding:9px 0;font-size:13px">+ Add another week to rotation</button>
+      <div class="anchor-hint">Week 1 starts the week of <input type="date" class="text-input" style="display:inline-block;width:auto;padding:6px 8px;font-size:12px" data-f="job" data-k="anchor" data-id="${j.id}" value="${j.anchor}"> — repeats every ${j.weeks.length} week${j.weeks.length>1?'s':''}</div>
+    </div>`}).join('');
+}
+
+/* ---------- calendar ---------- */
+function renderCal(){
+  $('calMonthLabel').textContent=MN[cal.m]+' '+cal.y;
+  $('calHead').innerHTML=WD.map(w=>`<span>${w}</span>`).join('');
+  const off=new Date(cal.y,cal.m,1).getDay(),dim=new Date(cal.y,cal.m+1,0).getDate(),tk=fmt(new Date());
+  let h='<div class="cal-cell empty"></div>'.repeat(off);
+  for(let d=1;d<=dim;d++){
+    const ds=`${cal.y}-${pad(cal.m+1)}-${pad(d)}`;
+    h+=`<div class="cal-cell${ds===tk?' today':''}${ds===sel?' selected':''}" data-a="day" data-d="${ds}"><div class="cal-daynum">${d}</div><div class="chips">${
+      shifts(ds).map(s=>{const c=col(s.job);return `<div class="chip${s.kind==='extra'?' extra':''}" style="--cb:${c.bg};--cf:${c.fg}">${esc(s.job.name.slice(0,10))}${s.kind==='extra'?' +':''}</div>`}).join('')}</div></div>`;
+  }
+  $('calGrid').innerHTML=h;
+  renderDay();renderBanner();
+}
+function renderDay(){
+  const el=$('selectedDayDetail');if(!sel){el.innerHTML='';return}
+  const label=P(sel).toLocaleDateString('en-US',{weekday:'long',month:'short',day:'numeric'});
+  const head=`<div class="dd-title"><span>${label}</span><span class="x" data-a="closeDD">×</span></div>`;
+  if(!jobs.length){el.innerHTML=`<div class="dd">${head}<div class="hint">Add a job in the Jobs &amp; Pattern tab first.</div></div>`;return}
+  el.innerHTML=`<div class="dd">${head}
+    ${jobs.map(j=>{
+      const rm=ov.find(o=>o.jobId===j.id&&o.date===sel&&o.type==='remove'),sch=isSch(j,sel),work=sch&&!rm,c=col(j);
+      const n=shifts(sel).filter(s=>s.job.id===j.id).length;
+      return `<div class="row"><div class="row-l"><span class="job-color-dot" style="background:${c.fg};margin-right:0"></span>${esc(j.name)}</div>
+        <div style="display:flex;align-items:center;gap:8px">
+          ${n?`<input type="number" inputmode="decimal" step="0.25" min="0" class="hin ${logged(j,sel)?'logged':''}" data-f="hin" data-j="${j.id}" data-d="${sel}" value="${nh(hrs(j,sel))}" title="Hours worked"><span style="font-size:11px;color:var(--text-faint)">hrs</span>`:''}
+          <span class="st ${work?'working':'off'}" data-a="tog" data-id="${j.id}" data-sch="${sch}">${work?'Working':'Off'}</span></div></div>`}).join('')}
+    <div class="quick-add"><span class="lbl">Add extra shift (pickup / OT)</span>
+      <div class="field-row"><select id="extraJob">${jobs.map(j=>`<option value="${j.id}">${esc(j.name)}</option>`).join('')}</select></div>
+      <div class="field-row"><input type="text" class="text-input" id="extraNote" placeholder="Note (optional, e.g. covering for Sam)"></div>
+      <button class="add-btn secondary" data-a="addExtra">+ Add extra shift</button></div>
+    ${ov.filter(o=>o.date===sel&&o.type==='add').map(o=>{const j=jobs.find(x=>x.id===o.jobId);return `<div class="row"><div class="row-l">Extra: ${esc(j?j.name:'?')}${o.note?' — '+esc(o.note):''}</div><span class="job-del" data-a="delOv" data-id="${o.id}">×</span></div>`}).join('')}
+  </div>`;
+}
+function renderBanner(){
+  const el=$('upcomingBanner'),ds=localStorage.getItem('roster_banner_dismiss');
+  if(ds&&new Date(ds)>new Date()){el.innerHTML='';return}
+  const up=[];
+  for(let i=0;i<3;i++){const d=addD(new Date(),i);shifts(fmt(d)).forEach(s=>up.push(`${s.job.name} (${i===0?'today':i===1?'tomorrow':d.toLocaleDateString('en-US',{weekday:'short'})})`))}
+  el.innerHTML=up.length?`<div class="banner"><span>📅 Upcoming: ${esc(up.join(', '))}</span><span class="x" data-a="dismiss">×</span></div>`:'';
+}
+function renderAll(){renderCal();renderPay();renderJobs()}
+
+/* ---------- events ---------- */
+const mut=fn=>{fn();save();renderAll()};
+const jobOf=id=>jobs.find(j=>j.id===id);
+document.addEventListener('click',e=>{
+  const t=e.target.closest('[data-a]');if(!t)return;
+  const a=t.dataset.a,id=t.dataset.id,j=jobOf(id);
+  switch(a){
+    case'tab':document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('active',x===t));document.querySelectorAll('.panel').forEach(p=>p.classList.toggle('visible',p.id===t.dataset.p));renderAll();break;
+    case'prev':cal.m--;if(cal.m<0){cal.m=11;cal.y--}renderCal();break;
+    case'next':cal.m++;if(cal.m>11){cal.m=0;cal.y++}renderCal();break;
+    case'today':{const n=new Date();cal={y:n.getFullYear(),m:n.getMonth()};sel=fmt(n);renderCal();break}
+    case'day':sel=t.dataset.d===sel?null:t.dataset.d;renderCal();break;
+    case'closeDD':sel=null;renderCal();break;
+    case'pprev':pOff--;renderPay();break;
+    case'pnext':pOff++;renderPay();break;
+    case'dismiss':{const u=new Date();u.setHours(u.getHours()+12);localStorage.setItem('roster_banner_dismiss',u.toISOString());$('upcomingBanner').innerHTML='';break}
+    case'tog':if(t.dataset.sch==='true')mut(()=>{const ex=ov.find(o=>o.jobId===id&&o.date===sel&&o.type==='remove');if(ex){ov=ov.filter(o=>o!==ex);delO.push(ex.id)}else ov.push(touch({id:uid(),jobId:id,date:sel,type:'remove',note:''}))});break;
+    case'addExtra':mut(()=>ov.push(touch({id:uid(),jobId:$('extraJob').value,date:sel,type:'add',note:$('extraNote').value.trim()})));break;
+    case'delOv':mut(()=>{ov=ov.filter(o=>o.id!==id);delO.push(id)});break;
+    case'addJob':mut(()=>jobs.push(touch({id:uid(),name:'New Job',colorIdx:jobs.length,rate:0,hrs:8,ot:0,ptype:'biweekly',pstart:fmt(sow(new Date())),weeks:[blank(),blank()],anchor:fmt(sow(new Date()))})));break;
+    case'delJob':if(confirm('Delete this job and its pattern?'))mut(()=>{jobs=jobs.filter(x=>x.id!==id);delJ.push(id)});break;
+    case'addWeek':mut(()=>{j.weeks.push(blank());touch(j)});break;
+    case'delWeek':if(j.weeks.length>1)mut(()=>{j.weeks.splice(+t.dataset.w,1);touch(j)});break;
+    case'dow':mut(()=>{const w=j.weeks[+t.dataset.w],d=+t.dataset.day;w[d]=!w[d];touch(j)});break;
+    case'connect':{const v=$('syncUrlInput').value.trim();if(!v){setSync('err','Paste a URL first');break}syncUrl=v;localStorage.setItem('roster_sync_url',v);$('copyLinkBtn').style.display='block';pull();autoSync();break}
+    case'syncNow':pull();break;
+    case'copy':navigator.clipboard.writeText(syncUrl).then(()=>{t.textContent='Copied!';setTimeout(()=>t.textContent='Copy link for another device',1500)},()=>alert(syncUrl));break;
+    case'export':{const u=URL.createObjectURL(new Blob([JSON.stringify(payload(),null,2)],{type:'application/json'}));const l=document.createElement('a');l.href=u;l.download=`roster-backup-${fmt(new Date())}.json`;document.body.appendChild(l);l.click();l.remove();URL.revokeObjectURL(u);break}
+    case'restore':{const f=$('restoreFileInput').files[0];if(!f){$('restoreStatus').textContent='Choose a backup file first.';break}
+      const r=new FileReader();r.onload=()=>{try{merge(JSON.parse(r.result));renderAll();push(true);$('restoreStatus').textContent='Restored.'}catch(x){$('restoreStatus').textContent='Could not read that file.'}};r.readAsText(f);break}
+  }
+});
+document.addEventListener('change',e=>{
+  const t=e.target,f=t.dataset.f;if(!f)return;
+  if(f==='hin')mut(()=>setHours(t.dataset.j,t.dataset.d,t.value));
+  else if(f==='job'){const j=jobOf(t.dataset.id),k=t.dataset.k;if(!j)return;
+    mut(()=>{j[k]=k==='name'?(t.value.trim()||'Job'):['anchor','pstart','ptype'].includes(k)?(t.value||j[k]):(Math.max(0,parseFloat(t.value))||0);if(k==='ptype'||k==='pstart')pOff=0;touch(j)})}
+  else if(f==='pjob'){pJob=t.value;pOff=0;renderPay()}
+  else if(f==='set'){const k=t.dataset.k;
+    mut(()=>{S[k]=(k==='type'||k==='start')?(t.value||S[k]):(parseFloat(t.value)||(k==='otMult'?1.5:0));S.mod=Date.now();pOff=0})}
+});
+document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible')pull()});
+
+const clock=()=>{$('clockTxt').textContent=new Date().toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'})};
+clock();setInterval(clock,60000);
+load();sel=fmt(new Date());renderAll();
+if(syncUrl){$('syncUrlInput').value=syncUrl;$('copyLinkBtn').style.display='block';setSync('ok','Connected');pull();autoSync()}
+})();
 </script>
 </body>
 </html>
